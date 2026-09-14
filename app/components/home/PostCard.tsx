@@ -1,5 +1,6 @@
 import { Avatar } from "../shared/Avatar";
 import { TypeBadge } from "../shared/TypeBadge";
+import { LikeButton } from "./LikeButton";
 import type { FeedPost } from "@/lib/feed-mock";
 
 type PostCardProps = {
@@ -84,21 +85,7 @@ export function PostCard({ post }: PostCardProps) {
         className="mt-4 flex items-center gap-[18px] border-t pt-[14px]"
         style={{ borderColor: "var(--card-divider)" }}
       >
-        <span className="text-accent-soft flex items-center gap-[7px] text-sm font-bold">
-          <svg
-            width="19"
-            height="19"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z" />
-          </svg>
-          {post.likes}
-        </span>
+        <LikeButton initialLikes={post.likes} />
         <a
           href="/detalle-publicacion"
           className="text-secondary flex items-center gap-[7px] text-sm font-bold"
