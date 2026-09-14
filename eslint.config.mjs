@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Static clickable mockups and Playwright artifacts are not app code.
+    "references/**",
+    ".playwright-mcp/**",
   ]),
 ]);
 

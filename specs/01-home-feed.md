@@ -1,6 +1,6 @@
 # SPEC 01 — Home feed luz desde plantilla feed.dc.html
 
-> **Status:** Approved
+> **Status:** Implemented
 > **Depends on:** Ninguna
 > **Date:** 2026-09-14
 > **Objective:** Implementar la plantilla references/pantallas/feed.dc.html como home (/) en modo luz idéntico al mockup, con datos mockeados y sin autenticación ni base de datos.
@@ -95,17 +95,17 @@ Convenciones:
 
 ## Acceptance criteria
 
-- [ ] `npm run dev` muestra (/) con fondo #F6ECDF, sidebar 248px y columna 760px como el mockup.
-- [ ] Se ven header, composer, divisor PUBLICADO HOY y exactamente los 3 posts con textos, horas, audiencias y badges del mockup en español (LOGRO, ACTIVIDAD, ANUNCIO).
-- [ ] El código usa solo identificadores en inglés (`ACHIEVEMENT`, `ACTIVITY`, `ANNOUNCEMENT`, `achievement-potty-training`); no hay tipos ni variables en español.
-- [ ] Tipografías Fredoka y Nunito cargadas vía next/font, sin `<link>` Google Fonts manual.
-- [ ] Con el SO en modo oscuro la página sigue mostrando estilo luz.
-- [ ] Clic en like suma 1 y segundo clic resta 1; al recargar vuelven a 3/5/8.
-- [ ] En viewport menor a 768px el sidebar está oculto y la hamburguesa abre y cierra el drawer.
-- [ ] Existe `app/components/shared/` con comunes y `app/components/home/` con propios del home en PascalCase.
-- [ ] `npm run lint` pasa sin errores.
-- [ ] `npx tsc --noEmit` pasa sin errores.
-- [ ] `npm run build` pasa sin errores.
+- [x] `npm run dev` muestra (/) con fondo #F6ECDF, sidebar 248px y columna 760px como el mockup.
+- [x] Se ven header, composer, divisor PUBLICADO HOY y exactamente los 3 posts con textos, horas, audiencias y badges del mockup en español (LOGRO, ACTIVIDAD, ANUNCIO).
+- [x] El código usa solo identificadores en inglés (`ACHIEVEMENT`, `ACTIVITY`, `ANNOUNCEMENT`, `achievement-potty-training`); no hay tipos ni variables en español.
+- [x] Tipografías Fredoka y Nunito cargadas vía next/font, sin `<link>` Google Fonts manual.
+- [x] Con el SO en modo oscuro la página sigue mostrando estilo luz.
+- [x] Clic en like suma 1 y segundo clic resta 1; al recargar vuelven a 3/5/8.
+- [x] En viewport menor a 768px el sidebar está oculto y la hamburguesa abre y cierra el drawer.
+- [x] Existe `app/components/shared/` con comunes y `app/components/home/` con propios del home en PascalCase.
+- [x] `npm run lint` pasa sin errores.
+- [x] `npx tsc --noEmit` pasa sin errores.
+- [x] `npm run build` pasa sin errores.
 
 ## Decisions
 
