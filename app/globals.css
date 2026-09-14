@@ -22,6 +22,14 @@
   --badge-announcement-fg: #4e72c8;
   --avatar-child-bg: #a9d9e8;
   --avatar-child-fg: #1f7a93;
+  --nav-inactive: #6e6359;
+  --label: #8a7c6d;
+  --divider: #e7dac8;
+  --card-divider: #f0e6d8;
+  --photo-border: #dbcdba;
+  --photo-bg: #f4ece1;
+  --photo-fg: #b0a290;
+  --edit: #c5503a;
 }
 
 /* Future dark theme: keep variable structure, do not activate yet.
@@ -54,6 +62,14 @@
   --color-badge-announcement-fg: var(--badge-announcement-fg);
   --color-avatar-child-bg: var(--avatar-child-bg);
   --color-avatar-child-fg: var(--avatar-child-fg);
+  --color-nav-inactive: var(--nav-inactive);
+  --color-label: var(--label);
+  --color-divider: var(--divider);
+  --color-card-divider: var(--card-divider);
+  --color-photo-border: var(--photo-border);
+  --color-photo-bg: var(--photo-bg);
+  --color-photo-fg: var(--photo-fg);
+  --color-edit: var(--edit);
   --font-display: var(--font-fredoka);
   --font-sans: var(--font-nunito);
 }
