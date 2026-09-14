@@ -1,26 +1,60 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+  --background: #f6ecdf;
+  --surface: #fffdf9;
+  --border: #ece0d0;
+  --foreground: #3f362e;
+  --body: #4a4038;
+  --secondary: #94887b;
+  --muted: #a89a8b;
+  --accent: #f2937a;
+  --accent-strong: #ee8164;
+  --accent-deep: #d9583c;
+  --accent-soft: #e0654a;
+  --accent-bg: #fbe3d8;
+  --badge-achievement-bg: #cfebd8;
+  --badge-achievement-fg: #3e9b6c;
+  --badge-activity-bg: #c7e7f1;
+  --badge-activity-fg: #2e89a6;
+  --badge-announcement-bg: #ccd8f4;
+  --badge-announcement-fg: #4e72c8;
 }
+
+/* Future dark theme: keep variable structure, do not activate yet.
+:root[data-theme="dark"] {
+  --background: #f6ecdf;
+  --surface: #fffdf9;
+  --border: #ece0d0;
+  --foreground: #3f362e;
+}
+*/
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-body: var(--body);
+  --color-secondary: var(--secondary);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-bg: var(--accent-bg);
+  --font-display: var(--font-fredoka);
+  --font-sans: var(--font-nunito);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: light;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-nunito), Nunito, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
