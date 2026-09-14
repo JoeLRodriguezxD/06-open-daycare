@@ -10,21 +10,31 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## MCPs
 
-- Playwright screenshots, logs, snapshots, and anything Playwright-related go in `.playwright-mcp/` (gitignored, never commit).
-- Context7 MCP: use it for current Next.js / React / Tailwind docs.
+- Playwright (`opencode.json` → `mcp.playwright`: `npx -y @playwright/mcp@latest`, `enabled: true`): snapshot/screenshot/click/press_key/resize para verificación visual y de comportamiento. Screenshots, logs y snapshots van SOLO en `.playwright-mcp/` (gitignored vía `.gitignore` → `.playwright-mcp/*`, nunca commitear).
+- Context7: obligatorio para código Next.js/React/Tailwind vigente (este repo es Next.js 16.3.5 + React 19 + Tailwind v4 con breaking changes). Flujo: `resolve-library-id` con `Next.js` → `query-docs` por concepto (una llamada por concepto: App Router, `next/font/google`, Server vs Client Components, Tailwind v4). Si hay conflicto entre criterio propio y doc vigente (o avisos en `node_modules/next/dist/docs/`), manda la doc vigente y se cita en el reporte.
 
 ## Stack
 
-- Next.js 16.3.5 (App Router) + React 19 + Tailwind CSS v4 + strict TS. Fresh `create-next-app`; the real app is not built yet.
+- Next.js 16.3.5 (App Router) + React 19 + Tailwind CSS v4 + strict TS. Spec 01 home-feed implementado; resto de pantallas aún como mockups en `references/`.
 - Entrypoints: `app/layout.tsx`, `app/page.tsx`. Path alias `@/*` maps to repo root.
 - No test runner, no CI, no pre-commit. Do not invent test commands.
 
 ## Commands
 
 - `npm run dev` (http://localhost:3000), `npm run build`, `npm run start`
-- `npm run lint` (flat config: `next/core-web-vitals` + `next/typescript`)
+- `npm run lint` (flat config: `next/core-web-vitals` + `next/typescript`; `eslint.config.mjs` ignora `.next/**`, `out/**`, `build/**`, `next-env.d.ts`, `references/**`, `.playwright-mcp/**`)
 - Typecheck: `npx tsc --noEmit` (no script defined)
 - Verify order: `lint` -> `tsc --noEmit` -> `build`
+- `/verify-spec <NN-slug|ruta|número>` (`.opencode/commands/verify-spec.md`, delega en agente `spec-verifier` con `subtask: true`): verifica acceptance criteria del spec, corre en orden comandos → revisión código con Context7 → verificación visual con Playwright sobre `npm run dev` vs `references/`, corrige código+spec y marca `- [x]` solo con evidencia real.
+
+## Agents (`.opencode/agents/`)
+
+- `spec-verifier.md` (subagent, model `opencode-go/muse-spark-1.3-contributor`, `temperature: 0.1`): verifica los acceptance criteria del spec indicado, corrige código y spec con reglas Next.js 16, y marca los checks. Responde en el idioma del spec.
+  - Entrada: ruta (`specs/01-home-feed.md`), número (`01`) o slug (`home-feed`); si falta o no existe, lista `specs/` y pregunta con `question`, no adivina.
+  - Fases: 1 leer spec (Status/Objective/Scope/plan/checklist; si Status ≠ Approved avisa pero sigue, a diferencia de `/spec-impl`), 2 clasificar cada `- [ ]` (comandos → ejecutar; código/estructura → glob/grep/read; tipografías/estilo → layout+globals; comportamiento/visual → Playwright vs mockups), 3 Context7 obligatorio antes de validar/corregir Next.js, 4 Playwright obligatorio para UI (dev + snapshot/screenshot/click/resize, compara con `references/pantallas/*.dc.html` y `references/screenshots/*.png`), 5 fix mínimo sin romper otros, 6 solo edita líneas de checklist (`- [ ]` → `- [x]` con evidencia; no cambia Status ni reescribe secciones).
+  - Reporte final en tabla `Criterio | ✅/❌ | Evidencia | Fix` + archivos tocados + fallos restantes + siguiente paso (si todo pasa: pedir cambiar Status a Implemented y commitear).
+  - Permisos: `read/edit/glob/grep/list/skill/question/todowrite/playwright_*/context7_*/webfetch: allow`; `bash` solo `npm run lint*`, `npx tsc --noEmit`, `npm run build*`, `git status/diff/log*` (allow), `npm run dev` y `npx next *` (ask), resto deny; `websearch/task/external_directory: deny`.
+  - Reglas duras: nunca `[x]` sin evidencia ejecutada; nunca inventar test runners/CI/pre-commits; nunca borrar bloque `nextjs-agent-rules`; nunca commitear/pushear/PR sin petición explícita.
 
 ## Next.js 16 gotchas
 
@@ -39,6 +49,17 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Workflow
 
 - Spec-driven skills live in `.agents/skills/` (`spec`, `spec-impl`); use them for large features.
+- `/spec` (`spec` de `klerith/fernando-skills`, ver `skills-lock.json`): solo diseña el spec en `specs/NN-slug.md` (Status Draft por defecto, nunca Approved auto), nunca escribe código ni propone implementar. Lee `CLAUDE.md`/`AGENTS.md`, respeta numeración `NN` y convenciones de specs previos, configura `specs/.spec-config.yml` (`AutoCreateBranch: true` por defecto) solo si falta.
+- `/spec-impl` (`spec-impl` de `klerith/fernando-skills`): solo implementa specs con Status = Approved (cualquier idioma); si es Draft/Implemented/otro, se detiene. Exige working tree limpio, crea/cambia a rama `spec-NN-slug` (según `AutoCreateBranch`), implementa paso a paso con pausas para revisar diff, nunca commitea solo.
+
+## Estado actual (spec 01 implementado)
+
+- `specs/01-home-feed.md` = Implemented (2026-09-14): home (/) luz idéntico a `references/pantallas/feed.dc.html`, datos mock, sin auth ni DB.
+- `lib/feed-mock.ts`: `PostType` (`ACHIEVEMENT`|`ACTIVITY`|`ANNOUNCEMENT`) + `POST_TYPE_LABELS` (UI en español), `FeedPost`, `currentUser`, `feedHeader`, 3 posts exactos del mockup.
+- `app/components/shared/` (server, reutilizables): `Avatar.tsx`, `TypeBadge.tsx`.
+- `app/components/home/` (`Sidebar`, `FeedHeader`, `Composer`, `PostCard` server + `LikeButton`, `MobileNav` client con `useState`): likes locales toggle +1/-1 (3/5/8 iniciales, sin persistencia); drawer móvil <768px reutiliza `Sidebar` (cierre X/overlay/Escape).
+- `app/layout.tsx`: `lang="es"`, Fredoka + Nunito vía `next/font/google` con variables (sin `<link>` manual).
+- `app/globals.css`: tokens Tailwind v4 `@theme inline` (fondo `#F6ECDF`, superficie `#FFFDF9`, bordes `#ECE0D0`, acentos `#F2937A`/`#EE8164`/`#D9583C`, badges LOGRO/ACTIVIDAD/ANUNCIO), `color-scheme: light` forzado, dark comentado como estructura futura.
 
 ## Spec Driven Development - Skills
 
@@ -47,4 +68,14 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## Reglas de codigo
 
-- Usar código limpio, nombres, funciones y variables en inglés 
+- Usar código limpio, nombres, funciones y variables en inglés
+- Textos visibles de UI en español. Un componente por archivo, PascalCase, export nombrado. Server components por defecto; `LikeButton`/`MobileNav` son client (`useState`).
+- Colores/radios/sombras vía tokens en `app/globals.css` (`@theme inline`), nunca hardcodeados. Fuentes solo vía `next/font/google`.
+- Estructura: `app/components/shared/` (reutilizables) + subcarpeta por página (`app/components/home/`); futuras páginas agregan su carpeta (`ninos`, `avisos`…).
+
+## Meta-regla: mantener AGENTS.md siempre actualizado (obligatorio)
+
+- Al terminar CUALQUIER cambio (código, spec, agente en `.opencode/agents/`, comando en `.opencode/commands/`, skill en `.agents/skills/`, MCP en `opencode.json`, dependencia en `package.json`, config de lint/ts/build, tokens/estructura en `app/` o `lib/`), actualizar este `AGENTS.md` en el MISMO trabajo, antes de dar por terminada la tarea.
+- Qué actualizar: sección `Estado actual` (specs implementados + archivos creados/modificados), `Commands` (nuevos scripts o cambios de orden/flags), `Agents` (nuevo agente o cambios de permisos/fases/modelo), `MCPs` (nuevo servidor o cambio en `opencode.json`/permisos/ruta de artefactos), `Stack`/`Workflow`/`UI source of truth`/`Reglas de codigo` si cambian convenciones, dependencias o mockups.
+- Cómo: editar solo las secciones afectadas, conciso y factual (rutas + comportamiento real verificado, no intenciones). No reescribir el archivo entero ni tocar el bloque `nextjs-agent-rules`.
+- Verificación: releer el diff de `AGENTS.md` (`git diff AGENTS.md`) antes de commitear; si el cambio no se refleja aquí, la tarea NO está terminada. 
