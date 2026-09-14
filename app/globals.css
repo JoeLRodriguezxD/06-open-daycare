@@ -20,6 +20,8 @@
   --badge-activity-fg: #2e89a6;
   --badge-announcement-bg: #ccd8f4;
   --badge-announcement-fg: #4e72c8;
+  --avatar-child-bg: #a9d9e8;
+  --avatar-child-fg: #1f7a93;
 }
 
 /* Future dark theme: keep variable structure, do not activate yet.
@@ -44,6 +46,14 @@
   --color-accent-deep: var(--accent-deep);
   --color-accent-soft: var(--accent-soft);
   --color-accent-bg: var(--accent-bg);
+  --color-badge-achievement-bg: var(--badge-achievement-bg);
+  --color-badge-achievement-fg: var(--badge-achievement-fg);
+  --color-badge-activity-bg: var(--badge-activity-bg);
+  --color-badge-activity-fg: var(--badge-activity-fg);
+  --color-badge-announcement-bg: var(--badge-announcement-bg);
+  --color-badge-announcement-fg: var(--badge-announcement-fg);
+  --color-avatar-child-bg: var(--avatar-child-bg);
+  --color-avatar-child-fg: var(--avatar-child-fg);
   --font-display: var(--font-fredoka);
   --font-sans: var(--font-nunito);
 }
