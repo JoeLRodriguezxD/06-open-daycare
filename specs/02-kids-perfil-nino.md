@@ -1,6 +1,6 @@
 # SPEC 02 — Niños en /kids y perfil en /kids/[slug] desde plantillas
 
-> **Status:** Approved
+> **Status:** Implemented
 > **Depends on:** SPEC 01
 > **Date:** 2026-09-14
 > **Objective:** Implementar /kids y /kids/[slug] idénticos a ninos.dc.html y perfil-nino.dc.html, con mock tipado, búsqueda funcional y navegación por slug.
