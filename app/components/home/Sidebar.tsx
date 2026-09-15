@@ -5,7 +5,13 @@ import { currentUser } from "@/lib/feed-mock";
 const navLinkBase =
   "flex items-center gap-3 rounded-xl px-3 py-[11px] text-[14.5px]";
 
-export function Sidebar() {
+export type SidebarActiveItem = "feed" | "kids";
+
+type SidebarProps = {
+  activeItem?: SidebarActiveItem;
+};
+
+export function Sidebar({ activeItem = "feed" }: SidebarProps) {
   return (
     <aside className="bg-surface border-border sticky top-0 flex h-screen w-[248px] flex-none flex-col border-r px-4 py-6">
       <Link href="/" className="flex items-center gap-[11px] px-2 pt-1 pb-[22px]">
@@ -64,8 +70,12 @@ export function Sidebar() {
       <nav className="flex flex-1 flex-col gap-1">
         <Link
           href="/"
-          aria-current="page"
-          className={`${navLinkBase} bg-accent-bg text-accent-deep font-extrabold`}
+          aria-current={activeItem === "feed" ? "page" : undefined}
+          className={
+            activeItem === "feed"
+              ? `${navLinkBase} bg-accent-bg text-accent-deep font-extrabold`
+              : `${navLinkBase} text-nav-inactive font-semibold`
+          }
         >
           <svg
             width="19"
@@ -81,9 +91,14 @@ export function Sidebar() {
           </svg>
           Feed
         </Link>
-        <a
-          href="/ninos"
-          className={`${navLinkBase} text-nav-inactive font-semibold`}
+        <Link
+          href="/kids"
+          aria-current={activeItem === "kids" ? "page" : undefined}
+          className={
+            activeItem === "kids"
+              ? `${navLinkBase} bg-accent-bg text-accent-deep font-extrabold`
+              : `${navLinkBase} text-nav-inactive font-semibold`
+          }
         >
           <svg
             width="19"
@@ -100,7 +115,7 @@ export function Sidebar() {
             <path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 20a5 5 0 0 1 5.5-4.9" />
           </svg>
           Niños
-        </a>
+        </Link>
         <a
           href="/avisos"
           className={`${navLinkBase} text-nav-inactive font-semibold`}
