@@ -39,6 +39,13 @@
   --badge-link-fg: #c56486;
   --kid-hover-border: #f2a78e;
   --kid-chevron: #cbb89f;
+  --allergy-box-bg: #fbdad6;
+  --allergy-icon-bg: #f4a8a0;
+  --allergy-title-fg: #c5413a;
+  --allergy-body-fg: #b25249;
+  --badge-pending-bg: #f7e7a6;
+  --badge-pending-fg: #9a7b1e;
+  --invite-border: #d8cbba;
   --nav-inactive: #6e6359;
   --label: #8a7c6d;
   --divider: #e7dac8;
@@ -96,6 +103,13 @@
   --color-badge-link-fg: var(--badge-link-fg);
   --color-kid-hover-border: var(--kid-hover-border);
   --color-kid-chevron: var(--kid-chevron);
+  --color-allergy-box-bg: var(--allergy-box-bg);
+  --color-allergy-icon-bg: var(--allergy-icon-bg);
+  --color-allergy-title-fg: var(--allergy-title-fg);
+  --color-allergy-body-fg: var(--allergy-body-fg);
+  --color-badge-pending-bg: var(--badge-pending-bg);
+  --color-badge-pending-fg: var(--badge-pending-fg);
+  --color-invite-border: var(--invite-border);
   --color-nav-inactive: var(--nav-inactive);
   --color-label: var(--label);
   --color-divider: var(--divider);
