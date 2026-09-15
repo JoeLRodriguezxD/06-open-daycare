@@ -55,6 +55,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Estado actual (spec 01 implementado)
 
 - `specs/01-home-feed.md` = Implemented (2026-09-14): home (/) luz idéntico a `references/pantallas/feed.dc.html`, datos mock, sin auth ni DB.
+- `specs/02-kids-perfil-nino.md` = Draft (2026-09-14): /kids y /kids/[slug] desde `ninos.dc.html` y `perfil-nino.dc.html`, mock en `lib/kids-mock.ts`, búsqueda funcional, Sidebar con `activeItem` y Avatar extendido.
 - `lib/feed-mock.ts`: `PostType` (`ACHIEVEMENT`|`ACTIVITY`|`ANNOUNCEMENT`) + `POST_TYPE_LABELS` (UI en español), `FeedPost`, `currentUser`, `feedHeader`, 3 posts exactos del mockup.
 - `app/components/shared/` (server, reutilizables): `Avatar.tsx`, `TypeBadge.tsx`.
 - `app/components/home/` (`Sidebar`, `FeedHeader`, `Composer`, `PostCard` server + `LikeButton`, `MobileNav` client con `useState`): likes locales toggle +1/-1 (3/5/8 iniciales, sin persistencia); drawer móvil <768px reutiliza `Sidebar` (cierre X/overlay/Escape).
