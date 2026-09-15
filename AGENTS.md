@@ -52,14 +52,18 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `/spec` (`spec` de `klerith/fernando-skills`, ver `skills-lock.json`): solo diseña el spec en `specs/NN-slug.md` (Status Draft por defecto, nunca Approved auto), nunca escribe código ni propone implementar. Lee `CLAUDE.md`/`AGENTS.md`, respeta numeración `NN` y convenciones de specs previos, configura `specs/.spec-config.yml` (`AutoCreateBranch: true` por defecto) solo si falta.
 - `/spec-impl` (`spec-impl` de `klerith/fernando-skills`): solo implementa specs con Status = Approved (cualquier idioma); si es Draft/Implemented/otro, se detiene. Exige working tree limpio, crea/cambia a rama `spec-NN-slug` (según `AutoCreateBranch`), implementa paso a paso con pausas para revisar diff, nunca commitea solo.
 
-## Estado actual (spec 01 implementado)
+## Estado actual (specs 01 y 02 implementados)
 
 - `specs/01-home-feed.md` = Implemented (2026-09-14): home (/) luz idéntico a `references/pantallas/feed.dc.html`, datos mock, sin auth ni DB.
+- `specs/02-kids-perfil-nino.md` = Approved → implementado en rama `spec-02-kids-perfil-nino` (2026-09-14): /kids y /kids/[slug] idénticos a `ninos.dc.html` y `perfil-nino.dc.html`, mock en `lib/kids-mock.ts`, búsqueda funcional, Sidebar con `activeItem` y Avatar extendido.
 - `lib/feed-mock.ts`: `PostType` (`ACHIEVEMENT`|`ACTIVITY`|`ANNOUNCEMENT`) + `POST_TYPE_LABELS` (UI en español), `FeedPost`, `currentUser`, `feedHeader`, 3 posts exactos del mockup.
-- `app/components/shared/` (server, reutilizables): `Avatar.tsx`, `TypeBadge.tsx`.
-- `app/components/home/` (`Sidebar`, `FeedHeader`, `Composer`, `PostCard` server + `LikeButton`, `MobileNav` client con `useState`): likes locales toggle +1/-1 (3/5/8 iniciales, sin persistencia); drawer móvil <768px reutiliza `Sidebar` (cierre X/overlay/Escape).
+- `lib/kids-mock.ts`: `ParentStatus` (`ACTIVE`|`PENDING`), `LinkedParent`, `Kid`, 8 niños exactos del mockup (Mateo con Lucía ACTIVA y Diego PENDIENTE), `getKidBySlug`.
+- `app/components/shared/` (server, reutilizables): `Avatar.tsx` (props opcionales `background`/`foreground`), `TypeBadge.tsx`.
+- `app/components/home/` (`Sidebar` con prop `activeItem: "feed"|"kids"` default `feed`, href Niños → `/kids`; `FeedHeader`, `Composer`, `PostCard` server + `LikeButton`, `MobileNav` client con `useState` que propaga `activeItem`): likes locales toggle +1/-1 (3/5/8 iniciales, sin persistencia); drawer móvil <768px reutiliza `Sidebar` (cierre X/overlay/Escape).
+- `app/components/kids/` (server salvo `KidSearch` client con `useState`): `KidCard` (regla MANÍ/LACTOSA/VINCULAR/chevron, link a `/kids/[slug]`), `KidsGrid` (2 col, 1 en móvil), `KidSearch` (filtro por nombre + encabezado SALA SOLES + vacío en español), `ProfileHeader`, `AllergyNotes` (solo con notas), `KidFacts`, `LinkedParents` (badges ACTIVA/PENDIENTE).
+- `app/kids/page.tsx` (columna 880px, header GESTIÓN/Niños/Agregar niño → `/agregar-nino` futuro) y `app/kids/[slug]/page.tsx` (`generateStaticParams` 8 slugs, `notFound()` en slug inexistente; Editar → `/agregar-nino`, Resumen → `/resumen-dia`, Vincular → `/vincular-padre` futuros).
 - `app/layout.tsx`: `lang="es"`, Fredoka + Nunito vía `next/font/google` con variables (sin `<link>` manual).
-- `app/globals.css`: tokens Tailwind v4 `@theme inline` (fondo `#F6ECDF`, superficie `#FFFDF9`, bordes `#ECE0D0`, acentos `#F2937A`/`#EE8164`/`#D9583C`, badges LOGRO/ACTIVIDAD/ANUNCIO), `color-scheme: light` forzado, dark comentado como estructura futura.
+- `app/globals.css`: tokens Tailwind v4 `@theme inline` (fondo `#F6ECDF`, superficie `#FFFDF9`, bordes `#ECE0D0`, acentos `#F2937A`/`#EE8164`/`#D9583C`, badges LOGRO/ACTIVIDAD/ANUNCIO, pasteles avatar sky/rose/mint/sand/lavender + `parent-blue`, badges alergia/vínculo/pendiente, `kid-hover-border`, `kid-chevron`, caja alergias), `color-scheme: light` forzado, dark comentado como estructura futura.
 
 ## Spec Driven Development - Skills
 

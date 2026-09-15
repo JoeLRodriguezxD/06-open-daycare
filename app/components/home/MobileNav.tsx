@@ -1,11 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Sidebar } from "./Sidebar";
+import { Sidebar, type SidebarActiveItem } from "./Sidebar";
 import { Avatar } from "../shared/Avatar";
 import { currentUser } from "@/lib/feed-mock";
 
-export function MobileNav() {
+type MobileNavProps = {
+  activeItem?: SidebarActiveItem;
+};
+
+export function MobileNav({ activeItem = "feed" }: MobileNavProps) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -85,7 +89,7 @@ export function MobileNav() {
                 <path d="M18 6 6 18M6 6l12 12" />
               </svg>
             </button>
-            <Sidebar />
+            <Sidebar activeItem={activeItem} />
           </div>
         </div>
       ) : null}
