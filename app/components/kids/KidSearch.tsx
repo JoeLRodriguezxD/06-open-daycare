@@ -45,6 +45,14 @@ export function KidSearch({ kids }: KidSearchProps) {
         />
       </div>
 
+      <div className="mb-[14px] flex items-center gap-3">
+        <span className="text-foreground text-[12.5px] font-extrabold tracking-[0.8px]">
+          SALA SOLES
+        </span>
+        <span className="text-muted text-[13px]">{kids.length} niños</span>
+        <span aria-hidden="true" className="bg-divider h-px flex-1" />
+      </div>
+
       {visibleKids.length > 0 ? (
         <KidsGrid kids={visibleKids} />
       ) : (
