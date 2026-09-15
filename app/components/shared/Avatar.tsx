@@ -4,6 +4,8 @@ type AvatarProps = {
   initial: string;
   tone?: AvatarTone;
   size?: number;
+  background?: string;
+  foreground?: string;
 };
 
 const toneColors: Record<AvatarTone, { background: string; foreground: string }> = {
@@ -17,8 +19,16 @@ const toneColors: Record<AvatarTone, { background: string; foreground: string }>
   },
 };
 
-export function Avatar({ initial, tone = "user", size = 40 }: AvatarProps) {
+export function Avatar({
+  initial,
+  tone = "user",
+  size = 40,
+  background,
+  foreground,
+}: AvatarProps) {
   const colors = toneColors[tone];
+  const resolvedBackground = background ?? colors.background;
+  const resolvedForeground = foreground ?? colors.foreground;
 
   return (
     <div
@@ -28,8 +38,8 @@ export function Avatar({ initial, tone = "user", size = 40 }: AvatarProps) {
         width: size,
         height: size,
         fontSize: size * 0.4,
-        backgroundColor: colors.background,
-        color: colors.foreground,
+        backgroundColor: resolvedBackground,
+        color: resolvedForeground,
       }}
     >
       {initial}
