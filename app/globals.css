@@ -33,6 +33,12 @@
   --avatar-lavender-bg: #c9b6e8;
   --avatar-lavender-fg: #7b5fc0;
   --avatar-parent-blue-bg: #a9c7e8;
+  --badge-allergy-bg: #fbd8cc;
+  --badge-allergy-fg: #d9684a;
+  --badge-link-bg: #f9d2de;
+  --badge-link-fg: #c56486;
+  --kid-hover-border: #f2a78e;
+  --kid-chevron: #cbb89f;
   --nav-inactive: #6e6359;
   --label: #8a7c6d;
   --divider: #e7dac8;
@@ -84,6 +90,12 @@
   --color-avatar-lavender-bg: var(--avatar-lavender-bg);
   --color-avatar-lavender-fg: var(--avatar-lavender-fg);
   --color-avatar-parent-blue-bg: var(--avatar-parent-blue-bg);
+  --color-badge-allergy-bg: var(--badge-allergy-bg);
+  --color-badge-allergy-fg: var(--badge-allergy-fg);
+  --color-badge-link-bg: var(--badge-link-bg);
+  --color-badge-link-fg: var(--badge-link-fg);
+  --color-kid-hover-border: var(--kid-hover-border);
+  --color-kid-chevron: var(--kid-chevron);
   --color-nav-inactive: var(--nav-inactive);
   --color-label: var(--label);
   --color-divider: var(--divider);
