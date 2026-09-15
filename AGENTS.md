@@ -79,6 +79,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Usar código limpio, nombres, funciones y variables en inglés
 - Textos visibles de UI en español. Un componente por archivo, PascalCase, export nombrado. Server components por defecto; `LikeButton`/`MobileNav`/`LoginForm`/`ActivateForm` son client (`useState`).
 - Colores/radios/sombras vía tokens en `app/globals.css` (`@theme inline`), nunca hardcodeados. Fuentes solo vía `next/font/google`.
+- Navegación interna siempre con `Link` de `next/link` (incluso a rutas futuras aún no creadas); nunca `<a href="/…">`.
 - Estructura: `app/components/shared/` (reutilizables) + subcarpeta por página (`app/components/home/`); futuras páginas agregan su carpeta (`ninos`, `avisos`…).
 
 ## Meta-regla: mantener AGENTS.md siempre actualizado (obligatorio)

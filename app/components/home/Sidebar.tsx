@@ -44,7 +44,7 @@ export function Sidebar({ activeItem = "feed" }: SidebarProps) {
         </div>
       </Link>
 
-      <a
+      <Link
         href="/crear-publicacion"
         className="mb-[18px] flex w-full items-center justify-center gap-2 rounded-[14px] p-3 text-[14.5px] font-extrabold text-white"
         style={{
@@ -65,7 +65,7 @@ export function Sidebar({ activeItem = "feed" }: SidebarProps) {
           <path d="M12 5v14M5 12h14" />
         </svg>
         Nueva publicación
-      </a>
+      </Link>
 
       <nav className="flex flex-1 flex-col gap-1">
         <Link
@@ -116,7 +116,7 @@ export function Sidebar({ activeItem = "feed" }: SidebarProps) {
           </svg>
           Niños
         </Link>
-        <a
+        <Link
           href="/avisos"
           className={`${navLinkBase} text-nav-inactive font-semibold`}
         >
@@ -133,8 +133,8 @@ export function Sidebar({ activeItem = "feed" }: SidebarProps) {
             <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0" />
           </svg>
           Avisos
-        </a>
-        <a
+        </Link>
+        <Link
           href="/mi-cuenta"
           className={`${navLinkBase} text-nav-inactive font-semibold`}
         >
@@ -152,7 +152,7 @@ export function Sidebar({ activeItem = "feed" }: SidebarProps) {
             <circle cx="12" cy="7" r="4" />
           </svg>
           Mi cuenta
-        </a>
+        </Link>
       </nav>
 
       <div className="border-border mt-[10px] border-t pt-[14px]">
@@ -164,7 +164,7 @@ export function Sidebar({ activeItem = "feed" }: SidebarProps) {
             </div>
             <div className="text-muted text-xs">{currentUser.role}</div>
           </div>
-          <a
+          <Link
             href="/login"
             title="Cerrar sesión"
             className="bg-background text-secondary flex h-8 w-8 flex-none items-center justify-center rounded-[10px]"
@@ -181,7 +181,7 @@ export function Sidebar({ activeItem = "feed" }: SidebarProps) {
             >
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
             </svg>
-          </a>
+          </Link>
         </div>
       </div>
     </aside>

@@ -1,9 +1,10 @@
+import Link from "next/link";
 import { Avatar } from "../shared/Avatar";
 import { currentUser } from "@/lib/feed-mock";
 
 export function Composer() {
   return (
-    <a
+    <Link
       href="/crear-publicacion"
       className="bg-surface border-border mb-6 flex items-center gap-[14px] rounded-[18px] border px-[18px] py-[14px]"
       style={{ boxShadow: "0 4px 14px -10px rgba(120,90,60,.4)" }}
@@ -27,6 +28,6 @@ export function Composer() {
           <circle cx="12" cy="13" r="4" />
         </svg>
       </span>
-    </a>
+    </Link>
   );
 }

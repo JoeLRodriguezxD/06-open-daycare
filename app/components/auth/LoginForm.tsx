@@ -81,12 +81,12 @@ export function LoginForm() {
       ) : null}
 
       <div className="mb-5 text-right">
-        <a
+        <Link
           href="/recuperar-password"
           className="text-auth-error text-[13.5px] font-bold"
         >
           ¿Olvidaste tu contraseña?
-        </a>
+        </Link>
       </div>
 
       <button

@@ -65,7 +65,7 @@ export default async function KidProfilePage({ params }: KidProfilePageProps) {
               </div>
 
               <div className="flex w-full flex-none flex-col gap-[14px] md:w-[300px]">
-                <a
+                <Link
                   href="/resumen-dia"
                   className="flex w-full items-center justify-center gap-[9px] rounded-[14px] p-[13px] text-[15px] font-extrabold text-white"
                   style={{ backgroundColor: "var(--foreground)" }}
@@ -85,7 +85,7 @@ export default async function KidProfilePage({ params }: KidProfilePageProps) {
                     <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
                   </svg>
                   Resumen del día
-                </a>
+                </Link>
                 <LinkedParents parents={kid.linkedParents} />
               </div>
             </div>
