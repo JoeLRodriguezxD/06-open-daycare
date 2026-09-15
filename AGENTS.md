@@ -52,7 +52,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `/spec` (`spec` de `klerith/fernando-skills`, ver `skills-lock.json`): solo diseña el spec en `specs/NN-slug.md` (Status Draft por defecto, nunca Approved auto), nunca escribe código ni propone implementar. Lee `CLAUDE.md`/`AGENTS.md`, respeta numeración `NN` y convenciones de specs previos, configura `specs/.spec-config.yml` (`AutoCreateBranch: true` por defecto) solo si falta.
 - `/spec-impl` (`spec-impl` de `klerith/fernando-skills`): solo implementa specs con Status = Approved (cualquier idioma); si es Draft/Implemented/otro, se detiene. Exige working tree limpio, crea/cambia a rama `spec-NN-slug` (según `AutoCreateBranch`), implementa paso a paso con pausas para revisar diff, nunca commitea solo.
 
-## Estado actual (specs 01 y 02 implementados)
+## Estado actual (specs 01, 02 implementados y 03 en Draft)
+
+- `specs/03-login-activate-account.md` = Draft (2026-09-15): /login y /activate-account idénticos a `login.dc.html` y `activar-cuenta.dc.html`, sin selector Personal/Familia, con validación local en español y sin backend. Rutas en inglés, `lib/auth-validation.ts` + `app/components/auth/` (BrandPanel, LoginForm, ActivateForm), validación final con Playwright.
 
 - `specs/01-home-feed.md` = Implemented (2026-09-14): home (/) luz idéntico a `references/pantallas/feed.dc.html`, datos mock, sin auth ni DB.
 - `specs/02-kids-perfil-nino.md` = Approved → implementado en rama `spec-02-kids-perfil-nino` (2026-09-14): /kids y /kids/[slug] idénticos a `ninos.dc.html` y `perfil-nino.dc.html`, mock en `lib/kids-mock.ts`, búsqueda funcional, Sidebar con `activeItem` y Avatar extendido.
