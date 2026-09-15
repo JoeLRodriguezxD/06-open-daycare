@@ -15,7 +15,7 @@ export function ProfileHeader({ kid }: ProfileHeaderProps) {
         size={84}
       />
       <div className="min-w-0 flex-1">
-        <h1 className="font-display text-foreground truncate text-[28px] font-semibold">
+        <h1 className="font-display text-foreground text-[28px] font-semibold">
           {kid.fullName}
         </h1>
         <p className="text-secondary mt-[3px] text-[15px]">

@@ -104,20 +104,20 @@ Convenciones:
 
 ## Acceptance criteria
 
-- [ ] `npm run dev` muestra `/kids` con fondo #F6ECDF, sidebar 248px y columna 880px como el mockup.
-- [ ] Se ven header GESTIÓN y Niños, buscador, sección SALA SOLES con 8 niños y exactamente las 8 tarjetas con nombres, edades, contadores y badges del mockup.
-- [ ] Escribir en el buscador filtra por nombre sin recargar; sin match muestra estado vacío en español.
-- [ ] Click en cada tarjeta navega a su `/kids/[slug]` correspondiente.
-- [ ] `/kids/mateo-fernandez` muestra nombre, edad, sala, alergia al maní, fecha 12 mar 2022, Soles, feb 2025, Lucía ACTIVA y Diego PENDIENTE exactos del mockup.
-- [ ] La caja de alergias solo aparece cuando el niño tiene notas; un niño sin notas no la muestra.
-- [ ] Un slug inexistente muestra not-found.
-- [ ] El sidebar marca Niños activo en `/kids` y en el perfil; el home sigue con Feed activo.
-- [ ] En viewport menor a 768px el sidebar está oculto, la hamburguesa abre y cierra el drawer y el grid queda a 1 columna.
-- [ ] El código usa solo identificadores en inglés; no hay tipos ni variables en español.
-- [ ] Existe `app/components/kids/` con propios en PascalCase reutilizando `shared/` y `home/` sin duplicar Sidebar ni Avatar.
-- [ ] `npm run lint` pasa sin errores.
-- [ ] `npx tsc --noEmit` pasa sin errores.
-- [ ] `npm run build` pasa sin errores.
+- [x] `npm run dev` muestra `/kids` con fondo #F6ECDF, sidebar 248px y columna 880px como el mockup.
+- [x] Se ven header GESTIÓN y Niños, buscador, sección SALA SOLES con 8 niños y exactamente las 8 tarjetas con nombres, edades, contadores y badges del mockup.
+- [x] Escribir en el buscador filtra por nombre sin recargar; sin match muestra estado vacío en español.
+- [x] Click en cada tarjeta navega a su `/kids/[slug]` correspondiente.
+- [x] `/kids/mateo-fernandez` muestra nombre, edad, sala, alergia al maní, fecha 12 mar 2022, Soles, feb 2025, Lucía ACTIVA y Diego PENDIENTE exactos del mockup.
+- [x] La caja de alergias solo aparece cuando el niño tiene notas; un niño sin notas no la muestra.
+- [x] Un slug inexistente muestra not-found.
+- [x] El sidebar marca Niños activo en `/kids` y en el perfil; el home sigue con Feed activo.
+- [x] En viewport menor a 768px el sidebar está oculto, la hamburguesa abre y cierra el drawer y el grid queda a 1 columna.
+- [x] El código usa solo identificadores en inglés; no hay tipos ni variables en español.
+- [x] Existe `app/components/kids/` con propios en PascalCase reutilizando `shared/` y `home/` sin duplicar Sidebar ni Avatar.
+- [x] `npm run lint` pasa sin errores.
+- [x] `npx tsc --noEmit` pasa sin errores.
+- [x] `npm run build` pasa sin errores.
 
 ## Decisions
 

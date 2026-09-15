@@ -27,10 +27,10 @@ function ParentRow({ parent }: { parent: LinkedParent }) {
         size={40}
       />
       <div className="min-w-0 flex-1">
-        <div className="text-foreground truncate text-[14.5px] font-extrabold">
+        <div className="text-foreground text-[14.5px] font-extrabold">
           {parent.name}
         </div>
-        <div className="text-muted truncate text-[12.5px]">
+        <div className="text-muted text-[12.5px]">
           {parent.relation} · {statusDetailLabels[parent.status]}
         </div>
       </div>

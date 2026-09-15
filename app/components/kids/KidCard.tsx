@@ -52,10 +52,10 @@ export function KidCard({ kid }: KidCardProps) {
         size={48}
       />
       <div className="min-w-0 flex-1">
-        <div className="font-display text-foreground truncate text-[16px] font-semibold">
+        <div className="font-display text-foreground text-[16px] font-semibold">
           {kid.fullName}
         </div>
-        <div className="text-muted truncate text-[13px]">
+        <div className="text-muted text-[13px]">
           {kid.ageLabel} · {parentsLabel(kid.linkedParentsCount)}
         </div>
       </div>
