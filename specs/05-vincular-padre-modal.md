@@ -1,6 +1,6 @@
 # SPEC 05 — Modal de vincular padre desde vincular-padre.dc.html con invitación local
 
-> **Status:** Approved
+> **Status:** Implemented
 > **Depends on:** SPEC 02, SPEC 04
 > **Date:** 2026-09-16
 > **Objective:** Mostrar el formulario de vincular-padre.dc.html como modal overlay desde el perfil y la lista de niños, que solo envía con nombre, email válido y parentesco elegidos, genera un código local y cierra sin persistencia.
@@ -60,19 +60,19 @@ Convenciones:
 
 ## Acceptance criteria
 
-- [ ] Click en Vincular otro padre en `/kids/[slug]` abre el modal con `a {nombre}` sin cambiar URL.
-- [ ] Click en el badge VINCULAR en `/kids` abre el modal de ese niño sin navegar; click en el resto de la tarjeta navega al perfil.
-- [ ] Submit vacío muestra error en español bajo nombre, email y parentesco y no cierra.
-- [ ] Email con formato inválido o parentesco sin elegir bloquea con su error y no cierra.
-- [ ] Cada apertura genera un código distinto de 5 chars mayúsculas con `Vence en 7 días` fijo.
-- [ ] Envío con nombre, email válido y parentesco cierra y deja en origen.
-- [ ] Recargar tras un envío válido no muestra ningún padre nuevo.
-- [ ] X, overlay y Escape cierran sin guardar ni errores persistentes.
-- [ ] En viewport menor a 768px el modal se usa sin scroll horizontal.
-- [ ] Código solo con identificadores en inglés.
-- [ ] `npm run lint` pasa sin errores.
-- [ ] `npx tsc --noEmit` pasa sin errores.
-- [ ] `npm run build` pasa sin errores.
+- [x] Click en Vincular otro padre en `/kids/[slug]` abre el modal con `a {nombre}` sin cambiar URL.
+- [x] Click en el badge VINCULAR en `/kids` abre el modal de ese niño sin navegar; click en el resto de la tarjeta navega al perfil.
+- [x] Submit vacío muestra error en español bajo nombre, email y parentesco y no cierra.
+- [x] Email con formato inválido o parentesco sin elegir bloquea con su error y no cierra.
+- [x] Cada apertura genera un código distinto de 5 chars mayúsculas con `Vence en 7 días` fijo.
+- [x] Envío con nombre, email válido y parentesco cierra y deja en origen.
+- [x] Recargar tras un envío válido no muestra ningún padre nuevo.
+- [x] X, overlay y Escape cierran sin guardar ni errores persistentes.
+- [x] En viewport menor a 768px el modal se usa sin scroll horizontal.
+- [x] Código solo con identificadores en inglés.
+- [x] `npm run lint` pasa sin errores.
+- [x] `npx tsc --noEmit` pasa sin errores.
+- [x] `npm run build` pasa sin errores.
 
 ## Decisions
 
