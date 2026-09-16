@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { MobileNav } from "../components/home/MobileNav";
 import { Sidebar } from "../components/home/Sidebar";
 import { KidSearch } from "../components/kids/KidSearch";
@@ -24,7 +25,7 @@ export default function KidsPage() {
                   Niños
                 </h1>
               </div>
-              <a
+              <Link
                 href="/agregar-nino"
                 className="flex items-center gap-2 rounded-[14px] px-[18px] py-[11px] text-[14.5px] font-extrabold text-white"
                 style={{
@@ -47,7 +48,7 @@ export default function KidsPage() {
                   <path d="M12 5v14M5 12h14" />
                 </svg>
                 Agregar niño
-              </a>
+              </Link>
             </div>
 
             <KidSearch kids={kids} />

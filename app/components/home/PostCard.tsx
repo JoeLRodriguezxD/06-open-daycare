@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Avatar } from "../shared/Avatar";
 import { TypeBadge } from "../shared/TypeBadge";
 import { LikeButton } from "./LikeButton";
@@ -58,7 +59,7 @@ export function PostCard({ post }: PostCardProps) {
       <p className="text-body m-0 text-[15.5px] leading-[1.55]">{post.body}</p>
 
       {post.hasPhotoPlaceholder ? (
-        <a
+        <Link
           href="/foto"
           className="bg-photo-bg text-photo-fg mt-[14px] flex h-[200px] flex-col items-center justify-center gap-2 rounded-2xl border-[1.5px] border-dashed"
           style={{ borderColor: "var(--photo-border)" }}
@@ -78,7 +79,7 @@ export function PostCard({ post }: PostCardProps) {
             <path d="m21 15-3.6-3.6a2 2 0 0 0-2.8 0L6 21" />
           </svg>
           <span className="text-[13.5px]">{post.photoLabel}</span>
-        </a>
+        </Link>
       ) : null}
 
       <div
@@ -86,7 +87,7 @@ export function PostCard({ post }: PostCardProps) {
         style={{ borderColor: "var(--card-divider)" }}
       >
         <LikeButton initialLikes={post.likes} />
-        <a
+        <Link
           href="/detalle-publicacion"
           className="text-secondary flex items-center gap-[7px] text-sm font-bold"
         >
@@ -103,11 +104,11 @@ export function PostCard({ post }: PostCardProps) {
             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z" />
           </svg>
           {post.comments}
-        </a>
+        </Link>
         <span className="flex-1" />
-        <a href="/crear-publicacion" className="text-edit text-sm font-extrabold">
+        <Link href="/crear-publicacion" className="text-edit text-sm font-extrabold">
           Editar
-        </a>
+        </Link>
       </div>
     </article>
   );

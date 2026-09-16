@@ -52,7 +52,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `/spec` (`spec` de `klerith/fernando-skills`, ver `skills-lock.json`): solo diseña el spec en `specs/NN-slug.md` (Status Draft por defecto, nunca Approved auto), nunca escribe código ni propone implementar. Lee `CLAUDE.md`/`AGENTS.md`, respeta numeración `NN` y convenciones de specs previos, configura `specs/.spec-config.yml` (`AutoCreateBranch: true` por defecto) solo si falta.
 - `/spec-impl` (`spec-impl` de `klerith/fernando-skills`): solo implementa specs con Status = Approved (cualquier idioma); si es Draft/Implemented/otro, se detiene. Exige working tree limpio, crea/cambia a rama `spec-NN-slug` (según `AutoCreateBranch`), implementa paso a paso con pausas para revisar diff, nunca commitea solo.
 
-## Estado actual (specs 01 y 02 implementados)
+## Estado actual (specs 01, 02 implementados y 03 implementado en rama, pendiente Status Implemented)
+
+- `specs/03-login-activate-account.md` = Aprobado → implementado en rama `spec-03-login-activate-account` (2026-09-15): /login y /activate-account idénticos a `login.dc.html` y `activar-cuenta.dc.html`, sin selector Personal/Familia, con validación local en español y sin backend. Verificado con Playwright sobre `npm run dev` (submit vacío/inválido bloquea con errores, login/activación válidos navegan a `/`, cross-links OK, panel oculto <768px sin scroll horizontal); `tsc --noEmit`, eslint en archivos nuevos y `npm run build` pasan.
 
 - `specs/01-home-feed.md` = Implemented (2026-09-14): home (/) luz idéntico a `references/pantallas/feed.dc.html`, datos mock, sin auth ni DB.
 - `specs/02-kids-perfil-nino.md` = Approved → implementado en rama `spec-02-kids-perfil-nino` (2026-09-14): /kids y /kids/[slug] idénticos a `ninos.dc.html` y `perfil-nino.dc.html`, mock en `lib/kids-mock.ts`, búsqueda funcional, Sidebar con `activeItem` y Avatar extendido.
@@ -62,8 +64,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `app/components/home/` (`Sidebar` con prop `activeItem: "feed"|"kids"` default `feed`, href Niños → `/kids`; `FeedHeader`, `Composer`, `PostCard` server + `LikeButton`, `MobileNav` client con `useState` que propaga `activeItem`): likes locales toggle +1/-1 (3/5/8 iniciales, sin persistencia); drawer móvil <768px reutiliza `Sidebar` (cierre X/overlay/Escape).
 - `app/components/kids/` (server salvo `KidSearch` client con `useState`): `KidCard` (regla MANÍ/LACTOSA/VINCULAR/chevron, link a `/kids/[slug]`), `KidsGrid` (2 col, 1 en móvil), `KidSearch` (filtro por nombre + encabezado SALA SOLES + vacío en español), `ProfileHeader`, `AllergyNotes` (solo con notas), `KidFacts`, `LinkedParents` (badges ACTIVA/PENDIENTE).
 - `app/kids/page.tsx` (columna 880px, header GESTIÓN/Niños/Agregar niño → `/agregar-nino` futuro) y `app/kids/[slug]/page.tsx` (`generateStaticParams` 8 slugs, `notFound()` en slug inexistente; Editar → `/agregar-nino`, Resumen → `/resumen-dia`, Vincular → `/vincular-padre` futuros).
+- `lib/auth-validation.ts`: `LoginValues`, `ActivationValues`, `FormErrors`, `isValidEmail`, `validateLogin` (email formato + pass ≥6), `validateActivation` (+ código no vacío y `photoConsent` obligatorio), errores en español.
+- `app/components/auth/` (`BrandPanel` server con panel coral y footer exactos; `LoginForm`/`ActivateForm` client con `useState`, validación al submit y `router.push("/")` solo si válido; prefill activate 7K4P9 + lucia.fernandez@gmail.com, checkbox marcado editable) + `app/login/page.tsx` (grid 1.05fr/1fr, columna 392px, sin rol; ¿Olvidaste? → `/recuperar-password` futuro) y `app/activate-account/page.tsx` (centrado 440px, tarjeta Mateo · Sala Soles vía `invitePreview`).
 - `app/layout.tsx`: `lang="es"`, Fredoka + Nunito vía `next/font/google` con variables (sin `<link>` manual).
-- `app/globals.css`: tokens Tailwind v4 `@theme inline` (fondo `#F6ECDF`, superficie `#FFFDF9`, bordes `#ECE0D0`, acentos `#F2937A`/`#EE8164`/`#D9583C`, badges LOGRO/ACTIVIDAD/ANUNCIO, pasteles avatar sky/rose/mint/sand/lavender + `parent-blue`, badges alergia/vínculo/pendiente, `kid-hover-border`, `kid-chevron`, caja alergias), `color-scheme: light` forzado, dark comentado como estructura futura.
+- `app/globals.css`: tokens Tailwind v4 `@theme inline` (fondo `#F6ECDF`, superficie `#FFFDF9`, bordes `#ECE0D0`, acentos `#F2937A`/`#EE8164`/`#D9583C`, badges LOGRO/ACTIVIDAD/ANUNCIO, pasteles avatar sky/rose/mint/sand/lavender + `parent-blue`, badges alergia/vínculo/pendiente, `kid-hover-border`, `kid-chevron`, caja alergias, más `auth-*`: fondo `#FBF4EC`, borde input `#EADFD0`, error `#C5503A`, consentimiento `#FBF1D6`/`#8A7234`/`#5FB97E`, gradiente panel `#F6A98E`→`#F2937A`→`#EC7E62`, botón `#F4977E`→`#EE8164`, placeholder `#B6A99B`), `color-scheme: light` forzado, dark comentado como estructura futura.
 
 ## Spec Driven Development - Skills
 
@@ -73,8 +77,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Reglas de codigo
 
 - Usar código limpio, nombres, funciones y variables en inglés
-- Textos visibles de UI en español. Un componente por archivo, PascalCase, export nombrado. Server components por defecto; `LikeButton`/`MobileNav` son client (`useState`).
+- Textos visibles de UI en español. Un componente por archivo, PascalCase, export nombrado. Server components por defecto; `LikeButton`/`MobileNav`/`LoginForm`/`ActivateForm` son client (`useState`).
 - Colores/radios/sombras vía tokens en `app/globals.css` (`@theme inline`), nunca hardcodeados. Fuentes solo vía `next/font/google`.
+- Navegación interna siempre con `Link` de `next/link` (incluso a rutas futuras aún no creadas); nunca `<a href="/…">`.
 - Estructura: `app/components/shared/` (reutilizables) + subcarpeta por página (`app/components/home/`); futuras páginas agregan su carpeta (`ninos`, `avisos`…).
 
 ## Meta-regla: mantener AGENTS.md siempre actualizado (obligatorio)

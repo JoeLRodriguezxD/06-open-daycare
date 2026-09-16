@@ -54,6 +54,18 @@
   --photo-bg: #f4ece1;
   --photo-fg: #b0a290;
   --edit: #c5503a;
+  --auth-bg: #fbf4ec;
+  --auth-input-border: #eadfd0;
+  --auth-error: #c5503a;
+  --auth-consent-bg: #fbf1d6;
+  --auth-consent-fg: #8a7234;
+  --auth-consent-check: #5fb97e;
+  --auth-panel-start: #f6a98e;
+  --auth-panel-mid: #f2937a;
+  --auth-panel-end: #ec7e62;
+  --auth-button-start: #f4977e;
+  --auth-button-end: #ee8164;
+  --auth-placeholder: #b6a99b;
 }
 
 /* Future dark theme: keep variable structure, do not activate yet.
@@ -118,6 +130,18 @@
   --color-photo-bg: var(--photo-bg);
   --color-photo-fg: var(--photo-fg);
   --color-edit: var(--edit);
+  --color-auth-bg: var(--auth-bg);
+  --color-auth-input-border: var(--auth-input-border);
+  --color-auth-error: var(--auth-error);
+  --color-auth-consent-bg: var(--auth-consent-bg);
+  --color-auth-consent-fg: var(--auth-consent-fg);
+  --color-auth-consent-check: var(--auth-consent-check);
+  --color-auth-panel-start: var(--auth-panel-start);
+  --color-auth-panel-mid: var(--auth-panel-mid);
+  --color-auth-panel-end: var(--auth-panel-end);
+  --color-auth-button-start: var(--auth-button-start);
+  --color-auth-button-end: var(--auth-button-end);
+  --color-auth-placeholder: var(--auth-placeholder);
   --font-display: var(--font-fredoka);
   --font-sans: var(--font-nunito);
 }

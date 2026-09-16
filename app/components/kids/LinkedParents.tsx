@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Avatar } from "../shared/Avatar";
 import type { LinkedParent, ParentStatus } from "@/lib/kids-mock";
 
@@ -57,7 +58,7 @@ export function LinkedParents({ parents }: LinkedParentsProps) {
         {parents.map((parent) => (
           <ParentRow key={parent.id} parent={parent} />
         ))}
-        <a href="/vincular-padre" className="flex items-center gap-3 pt-2">
+        <Link href="/vincular-padre" className="flex items-center gap-3 pt-2">
           <span
             aria-hidden="true"
             className="text-photo-fg flex h-10 w-10 flex-none items-center justify-center rounded-full border-[1.5px] border-dashed"
@@ -79,7 +80,7 @@ export function LinkedParents({ parents }: LinkedParentsProps) {
           <span className="text-edit text-[14.5px] font-extrabold">
             Vincular otro padre
           </span>
-        </a>
+        </Link>
       </div>
     </div>
   );
