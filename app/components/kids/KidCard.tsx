@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Avatar } from "../shared/Avatar";
+import { LinkParentTrigger } from "./LinkParentTrigger";
 import type { Kid } from "@/lib/kids-mock";
 
 type KidCardProps = {
@@ -64,9 +65,13 @@ export function KidCard({ kid }: KidCardProps) {
           {kid.allergyTag}
         </span>
       ) : showLinkBadge ? (
-        <span className="bg-badge-link-bg text-badge-link-fg flex-none rounded-full px-[9px] py-[5px] text-[11px] font-extrabold">
+        <LinkParentTrigger
+          kid={kid}
+          ariaLabel={`Vincular padre a ${kid.fullName}`}
+          className="bg-badge-link-bg text-badge-link-fg flex-none cursor-pointer rounded-full px-[9px] py-[5px] text-[11px] font-extrabold"
+        >
           VINCULAR
-        </span>
+        </LinkParentTrigger>
       ) : (
         <ChevronIcon />
       )}

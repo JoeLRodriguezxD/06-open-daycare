@@ -86,7 +86,7 @@ export default async function KidProfilePage({ params }: KidProfilePageProps) {
                   </svg>
                   Resumen del día
                 </Link>
-                <LinkedParents parents={kid.linkedParents} />
+                <LinkedParents kid={kid} />
               </div>
             </div>
           </div>
