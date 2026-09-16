@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { PhotoModal } from "./PhotoModal";
 import {
   MAX_POST_PHOTOS,
   POST_AUDIENCE_LABELS,
@@ -22,7 +24,6 @@ type CreatePostModalProps = {
   onClose: () => void;
   initialValues?: CreatePostInitialValues;
   title?: string;
-  onOpenPhotoViewer?: () => void;
 };
 
 export type PhotoPreview = {
@@ -89,7 +90,6 @@ export function CreatePostModal({
   onClose,
   initialValues = emptyInitialValues,
   title = "Nueva publicación",
-  onOpenPhotoViewer,
 }: CreatePostModalProps) {
   const [audiences, setAudiences] = useState<PostAudience[]>(
     initialValues.audiences,
@@ -101,11 +101,13 @@ export function CreatePostModal({
   const [photoError, setPhotoError] = useState("");
   const [errors, setErrors] = useState<CreatePostErrors>({});
   const [dragActive, setDragActive] = useState(false);
+  const [photoViewerOpen, setPhotoViewerOpen] = useState(false);
+  const [photoViewerIndex, setPhotoViewerIndex] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && !photoViewerOpen) {
         event.stopPropagation();
         handleClose();
       }
@@ -119,7 +121,7 @@ export function CreatePostModal({
       document.body.style.overflow = "";
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [photoViewerOpen]);
 
   function handleClose() {
     revokePreviews(photos);
@@ -216,6 +218,22 @@ export function CreatePostModal({
       onClose();
     }
   }
+
+  function openPhotoViewer(index: number) {
+    setPhotoViewerIndex(index);
+    setPhotoViewerOpen(true);
+  }
+
+  function closePhotoViewer() {
+    setPhotoViewerOpen(false);
+  }
+
+  const photoViewerTitle =
+    audiences.length === 1
+      ? POST_AUDIENCE_LABELS[audiences[0]]
+      : audiences.length > 1 || wholeRoom
+        ? "Toda la sala"
+        : title;
 
   return (
     <div
@@ -390,8 +408,9 @@ export function CreatePostModal({
                 <div key={photo.url} className="relative h-24 w-24 flex-none">
                   <button
                     type="button"
-                    onClick={() => onOpenPhotoViewer?.()}
+                    onClick={() => openPhotoViewer(index)}
                     aria-label={`Ver foto ${index + 1}`}
+                    aria-haspopup="dialog"
                     className="h-full w-full cursor-pointer overflow-hidden rounded-[14px] border border-border bg-photo-bg"
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -484,6 +503,21 @@ export function CreatePostModal({
           </div>
         </form>
       </div>
+      {photoViewerOpen
+        ? createPortal(
+            <PhotoModal
+              photos={photos}
+              initialIndex={photoViewerIndex}
+              title={photoViewerTitle}
+              metadata="Sala Soles"
+              caption={description}
+              error={photoError}
+              onClose={closePhotoViewer}
+              onAddFiles={addFiles}
+            />,
+            document.body,
+          )
+        : null}
     </div>
   );
 }
