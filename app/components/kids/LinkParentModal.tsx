@@ -53,6 +53,7 @@ export function LinkParentModal({
   }, [onClose]);
 
   function handleOverlayClick(event: React.MouseEvent<HTMLDivElement>) {
+    event.stopPropagation();
     if (event.target === event.currentTarget) {
       onClose();
     }

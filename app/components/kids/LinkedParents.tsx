@@ -1,9 +1,9 @@
-import Link from "next/link";
 import { Avatar } from "../shared/Avatar";
-import type { LinkedParent, ParentStatus } from "@/lib/kids-mock";
+import { LinkParentTrigger } from "./LinkParentTrigger";
+import type { Kid, LinkedParent, ParentStatus } from "@/lib/kids-mock";
 
 type LinkedParentsProps = {
-  parents: LinkedParent[];
+  kid: Kid;
 };
 
 const statusBadgeLabels: Record<ParentStatus, string> = {
@@ -48,7 +48,8 @@ function ParentRow({ parent }: { parent: LinkedParent }) {
   );
 }
 
-export function LinkedParents({ parents }: LinkedParentsProps) {
+export function LinkedParents({ kid }: LinkedParentsProps) {
+  const parents = kid.linkedParents;
   return (
     <div className="bg-surface border-border rounded-2xl border px-[18px] py-4">
       <div className="text-label mb-[14px] text-[12.5px] font-extrabold tracking-[0.8px]">
@@ -58,7 +59,11 @@ export function LinkedParents({ parents }: LinkedParentsProps) {
         {parents.map((parent) => (
           <ParentRow key={parent.id} parent={parent} />
         ))}
-        <Link href="/vincular-padre" className="flex items-center gap-3 pt-2">
+        <LinkParentTrigger
+          kid={kid}
+          ariaLabel={`Vincular padre a ${kid.fullName}`}
+          className="flex cursor-pointer items-center gap-3 pt-2 text-left"
+        >
           <span
             aria-hidden="true"
             className="text-photo-fg flex h-10 w-10 flex-none items-center justify-center rounded-full border-[1.5px] border-dashed"
@@ -80,7 +85,7 @@ export function LinkedParents({ parents }: LinkedParentsProps) {
           <span className="text-edit text-[14.5px] font-extrabold">
             Vincular otro padre
           </span>
-        </Link>
+        </LinkParentTrigger>
       </div>
     </div>
   );
