@@ -41,30 +41,37 @@ export function KidCard({ kid }: KidCardProps) {
   const showLinkBadge = !hasAllergyTag && kid.linkedParentsCount === 0;
 
   return (
-    <Link
-      href={`/kids/${kid.slug}`}
+    <div
       className="bg-surface border-border hover:border-kid-hover-border flex min-w-0 items-center gap-[14px] rounded-[18px] border p-4 transition-transform duration-150 hover:-translate-y-0.5"
       style={{ boxShadow: "0 4px 14px -12px rgba(120,90,60,.5)" }}
     >
-      <Avatar
-        initial={kid.initial}
-        background={kid.avatarBg}
-        foreground={kid.avatarFg}
-        size={48}
-      />
-      <div className="min-w-0 flex-1">
-        <div className="font-display text-foreground text-[16px] font-semibold">
-          {kid.fullName}
+      <Link
+        href={`/kids/${kid.slug}`}
+        className="flex min-w-0 flex-1 items-center gap-[14px]"
+      >
+        <Avatar
+          initial={kid.initial}
+          background={kid.avatarBg}
+          foreground={kid.avatarFg}
+          size={48}
+        />
+        <div className="min-w-0 flex-1">
+          <div className="font-display text-foreground text-[16px] font-semibold">
+            {kid.fullName}
+          </div>
+          <div className="text-muted text-[13px]">
+            {kid.ageLabel} · {parentsLabel(kid.linkedParentsCount)}
+          </div>
         </div>
-        <div className="text-muted text-[13px]">
-          {kid.ageLabel} · {parentsLabel(kid.linkedParentsCount)}
-        </div>
-      </div>
-      {hasAllergyTag ? (
-        <span className="bg-badge-allergy-bg text-badge-allergy-fg flex-none rounded-full px-[9px] py-[5px] text-[11px] font-extrabold">
-          {kid.allergyTag}
-        </span>
-      ) : showLinkBadge ? (
+        {hasAllergyTag ? (
+          <span className="bg-badge-allergy-bg text-badge-allergy-fg flex-none rounded-full px-[9px] py-[5px] text-[11px] font-extrabold">
+            {kid.allergyTag}
+          </span>
+        ) : showLinkBadge ? null : (
+          <ChevronIcon />
+        )}
+      </Link>
+      {showLinkBadge ? (
         <LinkParentTrigger
           kid={kid}
           ariaLabel={`Vincular padre a ${kid.fullName}`}
@@ -72,9 +79,7 @@ export function KidCard({ kid }: KidCardProps) {
         >
           VINCULAR
         </LinkParentTrigger>
-      ) : (
-        <ChevronIcon />
-      )}
-    </Link>
+      ) : null}
+    </div>
   );
 }

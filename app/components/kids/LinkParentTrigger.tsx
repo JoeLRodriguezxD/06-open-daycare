@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { LinkParentModal } from "./LinkParentModal";
 import type { Kid } from "@/lib/kids-mock";
 
@@ -40,13 +41,16 @@ export function LinkParentTrigger({
       >
         {children}
       </button>
-      {open ? (
-        <LinkParentModal
-          kidFullName={kid.fullName}
-          kidShortName={kid.shortName}
-          onClose={handleClose}
-        />
-      ) : null}
+      {open
+        ? createPortal(
+            <LinkParentModal
+              kidFullName={kid.fullName}
+              kidShortName={kid.shortName}
+              onClose={handleClose}
+            />,
+            document.body,
+          )
+        : null}
     </>
   );
 }
