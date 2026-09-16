@@ -444,7 +444,10 @@ export function CreatePostModal({
               ))}
               <button
                 type="button"
-                onClick={() => fileInputRef.current?.click()}
+                onClick={() => {
+                  openPhotoViewer(Math.max(photos.length - 1, 0));
+                  fileInputRef.current?.click();
+                }}
                 onDragOver={(event) => {
                   event.preventDefault();
                   setDragActive(true);
