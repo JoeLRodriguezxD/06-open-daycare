@@ -66,6 +66,14 @@
   --auth-button-start: #f4977e;
   --auth-button-end: #ee8164;
   --auth-placeholder: #b6a99b;
+  --invite-info-bg: #e3ecfb;
+  --invite-info-fg: #3f5694;
+  --invite-info-icon: #4e72c8;
+  --invite-pill-selected-border: #9fb8ec;
+  --invite-pill-selected-bg: #ccd8f4;
+  --invite-pill-selected-fg: #4e72c8;
+  --invite-code-border: #e6d08a;
+  --invite-code-label: #a88526;
 }
 
 /* Future dark theme: keep variable structure, do not activate yet.
@@ -142,6 +150,14 @@
   --color-auth-button-start: var(--auth-button-start);
   --color-auth-button-end: var(--auth-button-end);
   --color-auth-placeholder: var(--auth-placeholder);
+  --color-invite-info-bg: var(--invite-info-bg);
+  --color-invite-info-fg: var(--invite-info-fg);
+  --color-invite-info-icon: var(--invite-info-icon);
+  --color-invite-pill-selected-border: var(--invite-pill-selected-border);
+  --color-invite-pill-selected-bg: var(--invite-pill-selected-bg);
+  --color-invite-pill-selected-fg: var(--invite-pill-selected-fg);
+  --color-invite-code-border: var(--invite-code-border);
+  --color-invite-code-label: var(--invite-code-label);
   --font-display: var(--font-fredoka);
   --font-sans: var(--font-nunito);
 }
