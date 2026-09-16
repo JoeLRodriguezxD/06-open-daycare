@@ -52,7 +52,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `/spec` (`spec` de `klerith/fernando-skills`, ver `skills-lock.json`): solo diseña el spec en `specs/NN-slug.md` (Status Draft por defecto, nunca Approved auto), nunca escribe código ni propone implementar. Lee `CLAUDE.md`/`AGENTS.md`, respeta numeración `NN` y convenciones de specs previos, configura `specs/.spec-config.yml` (`AutoCreateBranch: true` por defecto) solo si falta.
 - `/spec-impl` (`spec-impl` de `klerith/fernando-skills`): solo implementa specs con Status = Approved (cualquier idioma); si es Draft/Implemented/otro, se detiene. Exige working tree limpio, crea/cambia a rama `spec-NN-slug` (según `AutoCreateBranch`), implementa paso a paso con pausas para revisar diff, nunca commitea solo.
 
-## Estado actual (specs 01 implementado, 02–04 y 06 implementados en rama, pendiente Status Implemented)
+## Estado actual (specs 01–06 implementados, 07 en Draft)
+
+- `specs/07-crear-publicacion-foto.md` = Draft (2026-09-16): modal Crear publicación como overlay 580px desde Sidebar y Composer + visor Foto oscuro apilado con dropzone central, PARA múltiple / TIPO único / descripción obligatorios, fotos máx 4 solo imágenes, Editar precargado, Publicar solo cierra sin persistencia.
 
 - `specs/06-vincular-modal-fix.md` = Aprobado → implementado en rama `spec-06-vincular-modal-fix` (2026-09-16): fix raíz del modal Vincular padre recortado (botón dentro de `<Link>` + `fixed` bajo ancestro con transform). `KidCard` reestructurado a contenedor + `Link` interno + VINCULAR hermano; `LinkParentTrigger` renderiza `LinkParentModal` en portal a `document.body` vía `createPortal` (cubre lista y perfil, sin cambios en validación/código/persistencia). Verificado con Playwright sobre `npm run dev` (fullscreen 1056×666 con padre `BODY` desde lista y perfil, 1 diálogo estable sin cambio de URL, resto de tarjeta navega, triple validación bloquea, envío válido cierra y queda en origen, recarga sin padre nuevo, cierres X/overlay/Escape, 390px sin scroll horizontal, 0 errores consola, 0 interactivos anidados); `npm run lint`, `npx tsc --noEmit` y `npm run build` pasan.
 
