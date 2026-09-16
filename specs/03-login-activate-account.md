@@ -70,19 +70,19 @@ Convenciones:
 
 ## Acceptance criteria
 
-- [ ] `npm run dev` muestra `/login` con panel coral y formulario como el mockup, sin ningún botón Personal o Familia ni label INGRESO COMO.
-- [ ] `/login` arranca con email y contraseña vacíos; submit vacío muestra errores en español bajo cada campo y no navega.
-- [ ] `/login` con email válido y pass ≥6 navega a `/`; con email inválido o pass <6 muestra el error correspondiente y no navega.
-- [ ] `npm run dev` muestra `/activate-account` centrado con tarjeta Mateo · Sala Soles, código 7K4P9, email lucia.fernandez@gmail.com y checkbox marcado como el mockup.
-- [ ] Desmarcar el consentimiento bloquea Activar mi cuenta con error en español; con código vacío, email inválido o pass <6 también bloquea con su error.
-- [ ] Activación válida navega a `/`; link Iniciar sesión navega a `/login` y link Activá tu cuenta en login navega a `/activate-account`.
-- [ ] En viewport menor a 768px el panel coral de `/login` está oculto y el formulario queda centrado sin scroll horizontal.
-- [ ] El código usa solo identificadores en inglés; no hay tipos ni variables en español.
-- [ ] Existe `app/components/auth/` con componentes en PascalCase y `lib/auth-validation.ts` con helpers puros.
-- [ ] Tipografías Fredoka y Nunito vía next/font, sin `<link>` Google Fonts manual.
-- [ ] `npm run lint` pasa sin errores.
-- [ ] `npx tsc --noEmit` pasa sin errores.
-- [ ] `npm run build` pasa sin errores.
+- [x] `npm run dev` muestra `/login` con panel coral y formulario como el mockup, sin ningún botón Personal o Familia ni label INGRESO COMO.
+- [x] `/login` arranca con email y contraseña vacíos; submit vacío muestra errores en español bajo cada campo y no navega.
+- [x] `/login` con email válido y pass ≥6 navega a `/`; con email inválido o pass <6 muestra el error correspondiente y no navega.
+- [x] `npm run dev` muestra `/activate-account` centrado con tarjeta Mateo · Sala Soles, código 7K4P9, email lucia.fernandez@gmail.com y checkbox marcado como el mockup.
+- [x] Desmarcar el consentimiento bloquea Activar mi cuenta con error en español; con código vacío, email inválido o pass <6 también bloquea con su error.
+- [x] Activación válida navega a `/`; link Iniciar sesión navega a `/login` y link Activá tu cuenta en login navega a `/activate-account`.
+- [x] En viewport menor a 768px el panel coral de `/login` está oculto y el formulario queda centrado sin scroll horizontal.
+- [x] El código usa solo identificadores en inglés; no hay tipos ni variables en español.
+- [x] Existe `app/components/auth/` con componentes en PascalCase y `lib/auth-validation.ts` con helpers puros.
+- [x] Tipografías Fredoka y Nunito vía next/font, sin `<link>` Google Fonts manual.
+- [x] `npm run lint` pasa sin errores.
+- [x] `npx tsc --noEmit` pasa sin errores.
+- [x] `npm run build` pasa sin errores.
 
 ## Decisions
 
