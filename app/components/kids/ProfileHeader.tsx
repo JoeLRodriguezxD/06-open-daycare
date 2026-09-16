@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { Avatar } from "../shared/Avatar";
+import { EditKidTrigger } from "./EditKidTrigger";
 import type { Kid } from "@/lib/kids-mock";
 
 type ProfileHeaderProps = {
@@ -23,12 +23,7 @@ export function ProfileHeader({ kid }: ProfileHeaderProps) {
           {kid.ageLabel} · Sala {kid.classroom}
         </p>
       </div>
-      <Link
-        href="/agregar-nino"
-        className="bg-surface border-border text-nav-inactive flex-none rounded-xl border-[1.5px] px-4 py-[9px] text-sm font-bold"
-      >
-        Editar
-      </Link>
+      <EditKidTrigger kid={kid} />
     </div>
   );
 }
