@@ -1,6 +1,6 @@
 # SPEC 03 — Login en /login y activación en /activate-account desde plantillas
 
-> **Status:** Aprobado
+> **Status:** Implemented
 > **Depends on:** SPEC 01
 > **Date:** 2026-09-15
 > **Objective:** Implementar /login y /activate-account idénticos a login.dc.html y activar-cuenta.dc.html, sin selector Personal/Familia, con validación local en español y sin backend.
