@@ -1,6 +1,6 @@
 # SPEC 04 — Modal de agregar niño desde agregar-nino.dc.html con validación obligatoria
 
-> **Status:** Approved
+> **Status:** Implemented
 > **Depends on:** SPEC 02
 > **Date:** 2026-09-16
 > **Objective:** Mostrar el formulario de agregar-nino.dc.html como modal overlay abierto desde Agregar niño y Editar, que solo cierra con Guardar válido exigiendo nombre, fecha de nacimiento y sala, sin backend.
@@ -62,20 +62,20 @@ Convenciones:
 
 ## Acceptance criteria
 
-- [ ] Click en Agregar niño en `/kids` abre el modal con la tarjeta exacta del mockup sin cambiar de URL.
-- [ ] Click en Editar en `/kids/[slug]` abre el mismo modal con nombre, fecha y sala del niño precargados.
-- [ ] Submit con los tres campos vacíos muestra un error en español bajo cada uno y no cierra.
-- [ ] Fecha con formato distinto de dd/mm/aaaa, inexistente o futura bloquea con su error y no cierra.
-- [ ] Sala sin elegir bloquea con error; elegir Soles, Lunas o Estrellas lo supera.
-- [ ] Guardar con nombre, fecha válida pasada y sala elegida cierra el modal y deja al usuario en su página de origen.
-- [ ] Recargar tras un Guardar válido no muestra ningún niño nuevo en `/kids`.
-- [ ] Alergias y notas vacías no bloquean el Guardar.
-- [ ] Cancelar, X, click en overlay y Escape cierran sin guardar ni mostrar errores persistentes.
-- [ ] En viewport menor a 768px el modal se usa sin scroll horizontal.
-- [ ] El código usa solo identificadores en inglés; no hay tipos ni variables en español.
-- [ ] `npm run lint` pasa sin errores.
-- [ ] `npx tsc --noEmit` pasa sin errores.
-- [ ] `npm run build` pasa sin errores.
+- [x] Click en Agregar niño en `/kids` abre el modal con la tarjeta exacta del mockup sin cambiar de URL.
+- [x] Click en Editar en `/kids/[slug]` abre el mismo modal con nombre, fecha y sala del niño precargados.
+- [x] Submit con los tres campos vacíos muestra un error en español bajo cada uno y no cierra.
+- [x] Fecha con formato distinto de dd/mm/aaaa, inexistente o futura bloquea con su error y no cierra.
+- [x] Sala sin elegir bloquea con error; elegir Soles, Lunas o Estrellas lo supera.
+- [x] Guardar con nombre, fecha válida pasada y sala elegida cierra el modal y deja al usuario en su página de origen.
+- [x] Recargar tras un Guardar válido no muestra ningún niño nuevo en `/kids`.
+- [x] Alergias y notas vacías no bloquean el Guardar.
+- [x] Cancelar, X, click en overlay y Escape cierran sin guardar ni mostrar errores persistentes.
+- [x] En viewport menor a 768px el modal se usa sin scroll horizontal.
+- [x] El código usa solo identificadores en inglés; no hay tipos ni variables en español.
+- [x] `npm run lint` pasa sin errores.
+- [x] `npx tsc --noEmit` pasa sin errores.
+- [x] `npm run build` pasa sin errores.
 
 ## Decisions
 
