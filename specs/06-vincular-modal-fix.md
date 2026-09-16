@@ -1,6 +1,6 @@
 # SPEC 06 — Fix del modal Vincular padre recortado y con parpadeo en la lista de niños
 
-> **Status:** Approved
+> **Status:** Implemented
 > **Depends on:** SPEC 02, SPEC 04, SPEC 05
 > **Date:** 2026-09-16
 > **Objective:** Corregir la apertura del modal Vincular padre desde la lista y el perfil para que abra estable a fullscreen sin navegar ni recortarse, sin cambiar su lógica ni su persistencia.
@@ -56,22 +56,22 @@ Convenciones:
 
 ## Acceptance criteria
 
-- [ ] Clic en VINCULAR en `/kids` abre el modal a fullscreen sin cambiar la URL ni navegar al perfil.
-- [ ] El modal cubre todo el viewport (no recortado a la tarjeta) e idéntico a `references/pantallas/vincular-padre.dc.html`.
-- [ ] Un solo clic abre el modal una sola vez y queda estable, sin parpadeo ni cierre o navegación espontánea.
-- [ ] Clic en el resto de la tarjeta navega a `/kids/[slug]`.
-- [ ] Clic en Vincular otro padre en `/kids/[slug]` abre el mismo modal fullscreen sin cambiar la URL.
-- [ ] Submit vacío muestra error en español bajo nombre, email y parentesco y no cierra.
-- [ ] Email con formato inválido o parentesco sin elegir bloquea con su error y no cierra.
-- [ ] Envío con nombre, email válido y parentesco cierra y deja en origen.
-- [ ] Recargar tras un envío válido no muestra ningún padre nuevo.
-- [ ] X, overlay y Escape cierran sin guardar ni errores persistentes.
-- [ ] En viewport menor a 768px el modal se usa sin scroll horizontal.
-- [ ] Sin elemento interactivo anidado dentro de otro interactivo.
-- [ ] Ningún overlay `fixed` bajo ancestro con transform que lo recorte.
-- [ ] `npm run lint` pasa sin errores.
-- [ ] `npx tsc --noEmit` pasa sin errores.
-- [ ] `npm run build` pasa sin errores.
+- [x] Clic en VINCULAR en `/kids` abre el modal a fullscreen sin cambiar la URL ni navegar al perfil.
+- [x] El modal cubre todo el viewport (no recortado a la tarjeta) e idéntico a `references/pantallas/vincular-padre.dc.html`.
+- [x] Un solo clic abre el modal una sola vez y queda estable, sin parpadeo ni cierre o navegación espontánea.
+- [x] Clic en el resto de la tarjeta navega a `/kids/[slug]`.
+- [x] Clic en Vincular otro padre en `/kids/[slug]` abre el mismo modal fullscreen sin cambiar la URL.
+- [x] Submit vacío muestra error en español bajo nombre, email y parentesco y no cierra.
+- [x] Email con formato inválido o parentesco sin elegir bloquea con su error y no cierra.
+- [x] Envío con nombre, email válido y parentesco cierra y deja en origen.
+- [x] Recargar tras un envío válido no muestra ningún padre nuevo.
+- [x] X, overlay y Escape cierran sin guardar ni errores persistentes.
+- [x] En viewport menor a 768px el modal se usa sin scroll horizontal.
+- [x] Sin elemento interactivo anidado dentro de otro interactivo.
+- [x] Ningún overlay `fixed` bajo ancestro con transform que lo recorte.
+- [x] `npm run lint` pasa sin errores.
+- [x] `npx tsc --noEmit` pasa sin errores.
+- [x] `npm run build` pasa sin errores.
 
 ## Decisions
 
