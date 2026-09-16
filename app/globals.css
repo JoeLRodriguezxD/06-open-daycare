@@ -74,6 +74,20 @@
   --invite-pill-selected-fg: #4e72c8;
   --invite-code-border: #e6d08a;
   --invite-code-label: #a88526;
+  --post-kind-meal-bg: #9a7b1e;
+  --post-kind-meal-fg: #ffffff;
+  --post-kind-nap-bg: #e7dcf6;
+  --post-kind-nap-fg: #7b5fc0;
+  --post-kind-activity-bg: #2e89a6;
+  --post-kind-activity-fg: #ffffff;
+  --post-kind-achievement-bg: #cfebd8;
+  --post-kind-achievement-fg: #3e9b6c;
+  --post-kind-mood-bg: #f9d2de;
+  --post-kind-mood-fg: #c56486;
+  --post-kind-photo-bg: #fbd8cc;
+  --post-kind-photo-fg: #d9684a;
+  --post-kind-announcement-bg: #ccd8f4;
+  --post-kind-announcement-fg: #4e72c8;
 }
 
 /* Future dark theme: keep variable structure, do not activate yet.
@@ -158,6 +172,20 @@
   --color-invite-pill-selected-fg: var(--invite-pill-selected-fg);
   --color-invite-code-border: var(--invite-code-border);
   --color-invite-code-label: var(--invite-code-label);
+  --color-post-kind-meal-bg: var(--post-kind-meal-bg);
+  --color-post-kind-meal-fg: var(--post-kind-meal-fg);
+  --color-post-kind-nap-bg: var(--post-kind-nap-bg);
+  --color-post-kind-nap-fg: var(--post-kind-nap-fg);
+  --color-post-kind-activity-bg: var(--post-kind-activity-bg);
+  --color-post-kind-activity-fg: var(--post-kind-activity-fg);
+  --color-post-kind-achievement-bg: var(--post-kind-achievement-bg);
+  --color-post-kind-achievement-fg: var(--post-kind-achievement-fg);
+  --color-post-kind-mood-bg: var(--post-kind-mood-bg);
+  --color-post-kind-mood-fg: var(--post-kind-mood-fg);
+  --color-post-kind-photo-bg: var(--post-kind-photo-bg);
+  --color-post-kind-photo-fg: var(--post-kind-photo-fg);
+  --color-post-kind-announcement-bg: var(--post-kind-announcement-bg);
+  --color-post-kind-announcement-fg: var(--post-kind-announcement-fg);
   --font-display: var(--font-fredoka);
   --font-sans: var(--font-nunito);
 }
