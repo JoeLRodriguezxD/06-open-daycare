@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { LinkParentModal } from "./LinkParentModal";
 import type { Kid } from "@/lib/kids-mock";
 
@@ -18,6 +19,14 @@ export function LinkParentTrigger({
   ariaLabel,
 }: LinkParentTriggerProps) {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => {
+      setMounted(false);
+    };
+  }, []);
 
   function handleOpen(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
@@ -40,13 +49,16 @@ export function LinkParentTrigger({
       >
         {children}
       </button>
-      {open ? (
-        <LinkParentModal
-          kidFullName={kid.fullName}
-          kidShortName={kid.shortName}
-          onClose={handleClose}
-        />
-      ) : null}
+      {open && mounted
+        ? createPortal(
+            <LinkParentModal
+              kidFullName={kid.fullName}
+              kidShortName={kid.shortName}
+              onClose={handleClose}
+            />,
+            document.body,
+          )
+        : null}
     </>
   );
 }
