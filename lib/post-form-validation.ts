@@ -1,4 +1,12 @@
-export type PostAudience = "MATEO" | "SOFIA" | "BENJAMIN";
+export type PostAudience =
+  | "MATEO"
+  | "SOFIA"
+  | "BENJAMIN"
+  | "VALENTINA"
+  | "TOMAS"
+  | "EMMA"
+  | "LUCAS"
+  | "OLIVIA";
 
 export type PostKind =
   | "MEAL"
@@ -26,6 +34,11 @@ export const POST_AUDIENCE_LABELS: Record<PostAudience, string> = {
   MATEO: "Mateo",
   SOFIA: "Sofía",
   BENJAMIN: "Benjamín",
+  VALENTINA: "Valentina",
+  TOMAS: "Tomás",
+  EMMA: "Emma",
+  LUCAS: "Lucas",
+  OLIVIA: "Olivia",
 };
 
 export const POST_KIND_LABELS: Record<PostKind, string> = {

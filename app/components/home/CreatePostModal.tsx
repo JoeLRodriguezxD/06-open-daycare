@@ -12,6 +12,7 @@ import {
   type PostAudience,
   type PostKind,
 } from "@/lib/post-form-validation";
+import { kids, type Kid } from "@/lib/kids-mock";
 
 export type CreatePostInitialValues = {
   audiences: PostAudience[];
@@ -38,13 +39,39 @@ const emptyInitialValues: CreatePostInitialValues = {
   description: "",
 };
 
-const audienceOptions: PostAudience[] = ["MATEO", "SOFIA", "BENJAMIN"];
+const audienceOptions: PostAudience[] = [
+  "MATEO",
+  "SOFIA",
+  "BENJAMIN",
+  "VALENTINA",
+  "TOMAS",
+  "EMMA",
+  "LUCAS",
+  "OLIVIA",
+];
 
-const audienceAvatarStyles: Record<PostAudience, { bg: string; fg: string }> = {
-  MATEO: { bg: "#A9D9E8", fg: "#1F7A93" },
-  SOFIA: { bg: "#F4B8CC", fg: "#C44A7A" },
-  BENJAMIN: { bg: "#B9DEC4", fg: "#3E8B62" },
-};
+function normalizeShortName(value: string): string {
+  return value
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toUpperCase();
+}
+
+const kidByAudience: Record<PostAudience, Kid | undefined> =
+  Object.fromEntries(
+    audienceOptions.map((audience) => [
+      audience,
+      kids.find((kid) => normalizeShortName(kid.shortName) === audience),
+    ]),
+  ) as Record<PostAudience, Kid | undefined>;
+
+function getAudienceKid(audience: PostAudience): Kid | undefined {
+  return kidByAudience[audience];
+}
+
+function getAudienceLabel(audience: PostAudience): string {
+  return kidByAudience[audience]?.shortName ?? POST_AUDIENCE_LABELS[audience];
+}
 
 const kindOptions: PostKind[] = [
   "MEAL",
@@ -230,7 +257,7 @@ export function CreatePostModal({
 
   const photoViewerTitle =
     audiences.length === 1
-      ? POST_AUDIENCE_LABELS[audiences[0]]
+      ? getAudienceLabel(audiences[0])
       : audiences.length > 1 || wholeRoom
         ? "Toda la sala"
         : title;
@@ -293,6 +320,8 @@ export function CreatePostModal({
             <div className="mb-[22px] flex flex-wrap gap-[9px]">
               {audienceOptions.map((option) => {
                 const selected = audiences.includes(option);
+                const kid = getAudienceKid(option);
+                const label = kid?.shortName ?? POST_AUDIENCE_LABELS[option];
                 return (
                   <button
                     key={option}
@@ -314,13 +343,14 @@ export function CreatePostModal({
                       aria-hidden="true"
                       className="flex h-[26px] w-[26px] items-center justify-center rounded-full font-display text-[13px] font-semibold"
                       style={{
-                        backgroundColor: audienceAvatarStyles[option].bg,
-                        color: audienceAvatarStyles[option].fg,
+                        backgroundColor:
+                          kid?.avatarBg ?? "var(--avatar-sky-bg)",
+                        color: kid?.avatarFg ?? "var(--avatar-sky-fg)",
                       }}
                     >
-                      {POST_AUDIENCE_LABELS[option].charAt(0)}
+                      {kid?.initial ?? label.charAt(0)}
                     </span>
-                    {POST_AUDIENCE_LABELS[option]}
+                    {label}
                   </button>
                 );
               })}

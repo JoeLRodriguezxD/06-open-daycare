@@ -11,7 +11,7 @@
 
 - Componente client `app/components/home/CreatePostModal.tsx`: overlay con tarjeta exacta del mockup (max-width 580px, header Cancelar / Nueva publicación / Publicar, secciones PARA, TIPO, DESCRIPCIÓN, FOTOS).
 - Apertura sin cambiar URL vía portal a `document.body` desde el botón `Nueva publicación` de `Sidebar.tsx` y desde el `Composer.tsx` (`Compartí un momento…`), manteniendo ambas pages como server mediante triggers client.
-- PARA múltiple sin selección inicial: chips Mateo / Sofía / Benjamín + `Toda la sala` que marca los 3; desmarcar un niño desmarca `Toda la sala`; obligatorio al menos un destinatario.
+- PARA múltiple sin selección inicial: un chip por cada niño de `lib/kids-mock.ts` (nombre, inicial y avatar salen del mock, no hardcodeados) + `Toda la sala` que marca todos; desmarcar un niño desmarca `Toda la sala`; obligatorio al menos un destinatario.
 - TIPO único sin selección inicial: 7 pills Comida / Siesta / Actividad / Logro / Ánimo / Foto / Anuncio con los colores del mockup; obligatorio elegir uno.
 - DESCRIPCIÓN con placeholder `Contá cómo le fue hoy…`, obligatoria no vacía (trim).
 - FOTOS con thumbnail 96px + tile `Agregar` dashed: clic abre file picker (`accept="image/*"`, múltiple); drag & drop sobre el tile y sobre la zona dashed de `PhotoModal`; `dragover` resalta el borde; previews locales con `objectURL` y X para quitar; máximo 4 y solo imágenes con error en español bajo FOTOS.
@@ -39,7 +39,7 @@ Esta feature no usa DB. Reutiliza `FeedPost` de SPEC 01 y agrega tipos puros en 
 
 ```ts
 // lib/post-form-validation.ts
-type PostAudience = "MATEO" | "SOFIA" | "BENJAMIN";
+type PostAudience = "MATEO" | "SOFIA" | "BENJAMIN" | "VALENTINA" | "TOMAS" | "EMMA" | "LUCAS" | "OLIVIA";
 type PostKind = "MEAL" | "NAP" | "ACTIVITY" | "ACHIEVEMENT" | "MOOD" | "PHOTO" | "ANNOUNCEMENT";
 type CreatePostValues = { audiences: PostAudience[]; wholeRoom: boolean; kind: PostKind | ""; description: string; photoCount: number; photoError: string | "" };
 type CreatePostErrors = Partial<Record<"audiences" | "kind" | "description" | "photos", string>>;
@@ -69,7 +69,7 @@ Convenciones:
 - [ ] Clic en `Nueva publicación` del Sidebar abre Crear sin cambiar la URL.
 - [ ] Clic en `Compartí un momento…` del Composer abre el mismo Crear sin cambiar la URL.
 - [ ] Crear es idéntico a `references/pantallas/crear-publicacion.dc.html` (tarjeta 580px, header, 4 secciones).
-- [ ] PARA inicia vacío y admite selección múltiple; `Toda la sala` marca los 3 y desmarcar un niño la desmarca.
+- [ ] PARA inicia vacío y admite selección múltiple; `Toda la sala` marca todos los niños del mock y desmarcar un niño la desmarca.
 - [ ] TIPO inicia sin selección y solo admite una activa a la vez.
 - [ ] Publicar sin PARA, sin TIPO o con descripción vacía muestra sus errores en español y no cierra.
 - [ ] Clic en Agregar abre el picker de solo imágenes; elegir no-imagen muestra error bajo FOTOS y no se agrega.

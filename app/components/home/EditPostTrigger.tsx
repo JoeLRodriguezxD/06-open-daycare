@@ -17,7 +17,19 @@ function mapAudience(audience: string): {
 } {
   const normalized = audience.toLowerCase();
   if (normalized.includes("toda la sala")) {
-    return { audiences: ["MATEO", "SOFIA", "BENJAMIN"], wholeRoom: true };
+    return {
+      audiences: [
+        "MATEO",
+        "SOFIA",
+        "BENJAMIN",
+        "VALENTINA",
+        "TOMAS",
+        "EMMA",
+        "LUCAS",
+        "OLIVIA",
+      ],
+      wholeRoom: true,
+    };
   }
   const found: PostAudience[] = [];
   if (normalized.includes("mateo")) {
@@ -28,6 +40,21 @@ function mapAudience(audience: string): {
   }
   if (normalized.includes("benjam")) {
     found.push("BENJAMIN");
+  }
+  if (normalized.includes("valentina")) {
+    found.push("VALENTINA");
+  }
+  if (normalized.includes("tomas") || normalized.includes("tomás")) {
+    found.push("TOMAS");
+  }
+  if (normalized.includes("emma")) {
+    found.push("EMMA");
+  }
+  if (normalized.includes("lucas")) {
+    found.push("LUCAS");
+  }
+  if (normalized.includes("olivia")) {
+    found.push("OLIVIA");
   }
   return { audiences: found, wholeRoom: false };
 }
