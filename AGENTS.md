@@ -12,10 +12,11 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - Playwright (`opencode.json` → `mcp.playwright`: `npx -y @playwright/mcp@latest`, `enabled: true`): snapshot/screenshot/click/press_key/resize para verificación visual y de comportamiento. Screenshots, logs y snapshots van SOLO en `.playwright-mcp/` (gitignored vía `.gitignore` → `.playwright-mcp/*`, nunca commitear).
 - Context7: obligatorio para código Next.js/React/Tailwind vigente (este repo es Next.js 16.3.5 + React 19 + Tailwind v4 con breaking changes). Flujo: `resolve-library-id` con `Next.js` → `query-docs` por concepto (una llamada por concepto: App Router, `next/font/google`, Server vs Client Components, Tailwind v4). Si hay conflicto entre criterio propio y doc vigente (o avisos en `node_modules/next/dist/docs/`), manda la doc vigente y se cita en el reporte.
+- Supabase (global `~/.config/opencode/opencode.json` → `mcp.supabase` remote `https://mcp.supabase.com/mcp?project_ref=qsmqaljvnhnbodiktriw&features=docs%2Caccount%2Cdatabase%2Cdebugging%2Cdevelopment%2Cfunctions%2Cbranching`, `enabled: true`, OAuth con `opencode mcp auth supabase`; reiniciar opencode tras cambiar config): docs/account/database/debugging/development/functions/branching del proyecto `qsmqaljvnhnbodiktriw`.
 
 ## Stack
 
-- Next.js 16.3.5 (App Router) + React 19 + Tailwind CSS v4 + strict TS. Spec 01 home-feed implementado; resto de pantallas aún como mockups en `references/`.
+- Next.js 16.3.5 (App Router) + React 19 + Tailwind CSS v4 + strict TS. Specs 01–07 implementados (ver `Estado actual`); datos aún mock en `lib/*-mock.ts`, sin backend. Supabase sin implementar: `package.json` sin `@supabase/supabase-js` ni `@supabase/ssr`, sin cliente ni conexión a DB.
 - Entrypoints: `app/layout.tsx`, `app/page.tsx`. Path alias `@/*` maps to repo root.
 - No test runner, no CI, no pre-commit. Do not invent test commands.
 
@@ -46,9 +47,15 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `references/pantallas/*.dc.html` are static clickable mockups of every screen (open in a browser; `support.js` renders the `<x-dc>` elements). `references/screenshots/*.png` mirror them.
 - When building screens, match the mockups (Fredoka + Nunito fonts, warm cream palette), don't invent a new visual language.
 
+## DB source of truth (Supabase, solo referencia)
+
+- `opencode.json` → `references.docs` → `../07-DB-Schema/opendaycare-database-schema.md`: 13 tablas (`daycares`, `users`, `rooms`, `children`, `parent_children`, `invitations`, `posts`, `post_children`, `post_photos`, `reactions`, `comments`, `daily_summaries`, `devices` opcional) + enums en inglés (`user_role`, `user_status`, `relationship_type`, `invitation_status`, `post_type` 6 valores, `child_status`); la UI traduce a español, nunca persistir etiquetas.
+- Solo referencia, nada implementado en la DB del proyecto `qsmqaljvnhnbodiktriw`: no asumir tablas/RLS/triggers existentes sin verificar con el MCP (`list_tables`/`execute_sql`).
+- `.env.template` commiteado como plantilla (`SUPABASE_DB_PASSWORD`, excepción en `.gitignore` → `!.env.template`); secretos reales solo en `.env` local, nunca commitear.
+
 ## Workflow
 
-- Spec-driven skills live in `.agents/skills/` (`spec`, `spec-impl`); use them for large features.
+- Skills en `.agents/skills/` (ver `skills-lock.json`): `spec` + `spec-impl` de `klerith/fernando-skills`; `supabase` (v0.1.2) + `supabase-postgres-best-practices` (v1.1.1) de `supabase/agent-skills`. Supabase: cargar skill `supabase` en CUALQUIER tarea Supabase (verificar changelog + `search_docs` del MCP antes de implementar, CLI solo vía `--help`, pasar `advisors` + checklist de seguridad antes de migrar); cargar `supabase-postgres-best-practices` ANTES de tocar Postgres (tablas/columnas, migraciones, RLS, índices, funciones, triggers). Mirrors de la misma instalación en `.claude/skills/` y `agent/skills/`; fuente canónica `.agents/skills/` + `skills-lock.json`.
 - `/spec` (`spec` de `klerith/fernando-skills`, ver `skills-lock.json`): solo diseña el spec en `specs/NN-slug.md` (Status Draft por defecto, nunca Approved auto), nunca escribe código ni propone implementar. Lee `CLAUDE.md`/`AGENTS.md`, respeta numeración `NN` y convenciones de specs previos, configura `specs/.spec-config.yml` (`AutoCreateBranch: true` por defecto) solo si falta.
 - `/spec-impl` (`spec-impl` de `klerith/fernando-skills`): solo implementa specs con Status = Approved (cualquier idioma); si es Draft/Implemented/otro, se detiene. Exige working tree limpio, crea/cambia a rama `spec-NN-slug` (según `AutoCreateBranch`), implementa paso a paso con pausas para revisar diff, nunca commitea solo.
 
