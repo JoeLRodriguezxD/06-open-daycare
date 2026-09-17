@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Avatar } from "../shared/Avatar";
 import { TypeBadge } from "../shared/TypeBadge";
+import { EditPostTrigger } from "./EditPostTrigger";
 import { LikeButton } from "./LikeButton";
 import type { FeedPost } from "@/lib/feed-mock";
 
@@ -106,9 +107,7 @@ export function PostCard({ post }: PostCardProps) {
           {post.comments}
         </Link>
         <span className="flex-1" />
-        <Link href="/crear-publicacion" className="text-edit text-sm font-extrabold">
-          Editar
-        </Link>
+        <EditPostTrigger post={post} />
       </div>
     </article>
   );

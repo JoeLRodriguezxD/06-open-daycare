@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Avatar } from "../shared/Avatar";
+import { CreatePostTrigger } from "./CreatePostTrigger";
 import { currentUser } from "@/lib/feed-mock";
 
 const navLinkBase =
@@ -44,9 +45,9 @@ export function Sidebar({ activeItem = "feed" }: SidebarProps) {
         </div>
       </Link>
 
-      <Link
-        href="/crear-publicacion"
-        className="mb-[18px] flex w-full items-center justify-center gap-2 rounded-[14px] p-3 text-[14.5px] font-extrabold text-white"
+      <CreatePostTrigger
+        ariaLabel="Nueva publicación"
+        className="mb-[18px] flex w-full cursor-pointer items-center justify-center gap-2 rounded-[14px] p-3 text-[14.5px] font-extrabold text-white"
         style={{
           background: "linear-gradient(180deg, #f4977e, var(--accent-strong))",
           boxShadow: "0 8px 18px -8px rgba(238,129,100,.75)",
@@ -65,7 +66,7 @@ export function Sidebar({ activeItem = "feed" }: SidebarProps) {
           <path d="M12 5v14M5 12h14" />
         </svg>
         Nueva publicación
-      </Link>
+      </CreatePostTrigger>
 
       <nav className="flex flex-1 flex-col gap-1">
         <Link

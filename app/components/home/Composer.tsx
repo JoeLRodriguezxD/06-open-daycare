@@ -1,12 +1,12 @@
-import Link from "next/link";
 import { Avatar } from "../shared/Avatar";
+import { CreatePostTrigger } from "./CreatePostTrigger";
 import { currentUser } from "@/lib/feed-mock";
 
 export function Composer() {
   return (
-    <Link
-      href="/crear-publicacion"
-      className="bg-surface border-border mb-6 flex items-center gap-[14px] rounded-[18px] border px-[18px] py-[14px]"
+    <CreatePostTrigger
+      ariaLabel="Crear publicación"
+      className="bg-surface border-border mb-6 flex w-full cursor-pointer items-center gap-[14px] rounded-[18px] border px-[18px] py-[14px] text-left"
       style={{ boxShadow: "0 4px 14px -10px rgba(120,90,60,.4)" }}
     >
       <Avatar initial={currentUser.initial} tone="user" size={40} />
@@ -28,6 +28,6 @@ export function Composer() {
           <circle cx="12" cy="13" r="4" />
         </svg>
       </span>
-    </Link>
+    </CreatePostTrigger>
   );
 }
