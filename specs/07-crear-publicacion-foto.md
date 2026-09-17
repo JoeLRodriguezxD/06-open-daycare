@@ -1,6 +1,6 @@
 # SPEC 07 — Modal crear publicación con fotos y visor foto con dropzone
 
-> **Status:** Approved
+> **Status:** Implemented
 > **Depends on:** SPEC 01
 > **Date:** 2026-09-16
 > **Objective:** Mostrar el formulario de crear-publicacion.dc.html como modal overlay desde el feed con PARA múltiple, TIPO único y descripción obligatorios, y el visor de foto.dc.html como segundo modal apilado cuya zona dashed central es dropzone de hasta 4 imágenes, con Editar precargado y Publicar que solo cierra sin persistencia.
@@ -66,27 +66,27 @@ Convenciones:
 
 ## Acceptance criteria
 
-- [ ] Clic en `Nueva publicación` del Sidebar abre Crear sin cambiar la URL.
-- [ ] Clic en `Compartí un momento…` del Composer abre el mismo Crear sin cambiar la URL.
-- [ ] Crear es idéntico a `references/pantallas/crear-publicacion.dc.html` (tarjeta 580px, header, 4 secciones).
-- [ ] PARA inicia vacío y admite selección múltiple; `Toda la sala` marca todos los niños del mock y desmarcar un niño la desmarca.
-- [ ] TIPO inicia sin selección y solo admite una activa a la vez.
-- [ ] Publicar sin PARA, sin TIPO o con descripción vacía muestra sus errores en español y no cierra.
-- [ ] Clic en Agregar abre el picker de solo imágenes; elegir no-imagen muestra error bajo FOTOS y no se agrega.
-- [ ] Arrastrar imágenes sobre el tile o la zona dashed las agrega con preview y `dragover` resalta el borde.
-- [ ] Más de 4 fotos bloquea con error en español y no se agregan las excedentes; la X quita cada preview.
-- [ ] Foto es idéntico a `references/pantallas/foto.dc.html` y vacío muestra ayuda de dropzone en la zona dashed.
-- [ ] Con fotos, Foto muestra carrusel con anterior/siguiente y Descargar no navega ni descarga.
-- [ ] Foto abre apilado sobre Crear y al cerrarlo vuelve a Crear con todo conservado.
-- [ ] Editar en un post abre Crear precargado con su PARA, TIPO y descripción.
-- [ ] Publicar válido cierra y deja en origen.
-- [ ] Recargar tras Publicar no muestra ningún post nuevo.
-- [ ] Cancelar, X, overlay y Escape cierran sin guardar ni errores persistentes.
-- [ ] En viewport menor a 768px ambos modales se usan sin scroll horizontal.
-- [ ] Código solo con identificadores en inglés.
-- [ ] `npm run lint` pasa sin errores.
-- [ ] `npx tsc --noEmit` pasa sin errores.
-- [ ] `npm run build` pasa sin errores.
+- [x] Clic en `Nueva publicación` del Sidebar abre Crear sin cambiar la URL.
+- [x] Clic en `Compartí un momento…` del Composer abre el mismo Crear sin cambiar la URL.
+- [x] Crear es idéntico a `references/pantallas/crear-publicacion.dc.html` (tarjeta 580px, header, 4 secciones).
+- [x] PARA inicia vacío y admite selección múltiple; `Toda la sala` marca todos los niños del mock y desmarcar un niño la desmarca.
+- [x] TIPO inicia sin selección y solo admite una activa a la vez.
+- [x] Publicar sin PARA, sin TIPO o con descripción vacía muestra sus errores en español y no cierra.
+- [x] Clic en Agregar abre el picker de solo imágenes; elegir no-imagen muestra error bajo FOTOS y no se agrega.
+- [x] Arrastrar imágenes sobre el tile o la zona dashed las agrega con preview y `dragover` resalta el borde.
+- [x] Más de 4 fotos bloquea con error en español y no se agregan las excedentes; la X quita cada preview.
+- [x] Foto es idéntico a `references/pantallas/foto.dc.html` y vacío muestra ayuda de dropzone en la zona dashed.
+- [x] Con fotos, Foto muestra carrusel con anterior/siguiente y Descargar no navega ni descarga.
+- [x] Foto abre apilado sobre Crear y al cerrarlo vuelve a Crear con todo conservado.
+- [x] Editar en un post abre Crear precargado con su PARA, TIPO y descripción.
+- [x] Publicar válido cierra y deja en origen.
+- [x] Recargar tras Publicar no muestra ningún post nuevo.
+- [x] Cancelar, X, overlay y Escape cierran sin guardar ni errores persistentes.
+- [x] En viewport menor a 768px ambos modales se usan sin scroll horizontal.
+- [x] Código solo con identificadores en inglés.
+- [x] `npm run lint` pasa sin errores.
+- [x] `npx tsc --noEmit` pasa sin errores.
+- [x] `npm run build` pasa sin errores.
 
 ## Decisions
 
