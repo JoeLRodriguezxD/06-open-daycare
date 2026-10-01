@@ -1,6 +1,6 @@
 # SPEC 09 — Tabla users
 
-> **Status:** Approved
+> **Status:** Implemented
 > **Depends on:** SPEC 08
 > **Date:** 2026-10-01
 > **Objective:** Crear los enums `user_role` y `user_status` y la tabla `public.users` con FK opcional a `daycares` en el proyecto Supabase remoto con una migración versionada en el repo y RLS que deja leer solo a `authenticated`.
@@ -69,18 +69,18 @@ Identificadores en inglés y en minúsculas. `daycare_id` nullable para respetar
 
 ## Acceptance criteria
 
-- [ ] Existe un solo archivo nuevo `supabase/migrations/<timestamp>_create_users.sql` creado por `migration new`.
-- [ ] El SQL crea solo los tipos `user_role` con `staff`, `parent`, `admin` y `user_status` con `pending`, `active`.
-- [ ] El SQL crea solo `public.users` con `id`, `daycare_id`, `role`, `status`, `full_name`, `avatar_url`, `notify_on_post`, `daily_summary_enabled`, `created_at` y `updated_at`.
-- [ ] `role` es `NOT NULL` sin default y `status` tiene default `active`.
-- [ ] `daycare_id` es nullable con FK a `public.daycares(id)` y `ON DELETE SET NULL`.
-- [ ] `id` tiene default `gen_random_uuid()` y FK a `auth.users(id)` con `ON DELETE CASCADE`.
-- [ ] `public.users` tiene RLS activo, una sola policy `SELECT` para `authenticated`, cero policies de escritura y `anon` sin `SELECT`.
-- [ ] La migración deja `public.users` con cero filas; el staff llega por alta manual posterior, no por seed.
-- [ ] El staff `joel@google.com` existe en `auth.users` y tiene fila en `public.users` con `role staff`, `status active` y `daycare` Sala Soles.
-- [ ] El historial remoto tiene una migración `create_users` cuyo version es el timestamp del archivo local.
-- [ ] No hay passwords ni secretos en `specs/`, migraciones o git.
-- [ ] No hay cambios en `app/`, `lib/` ni `@supabase/supabase-js` en `package.json`. `.env` no se commitea.
+- [x] Existe un solo archivo nuevo `supabase/migrations/<timestamp>_create_users.sql` creado por `migration new`.
+- [x] El SQL crea solo los tipos `user_role` con `staff`, `parent`, `admin` y `user_status` con `pending`, `active`.
+- [x] El SQL crea solo `public.users` con `id`, `daycare_id`, `role`, `status`, `full_name`, `avatar_url`, `notify_on_post`, `daily_summary_enabled`, `created_at` y `updated_at`.
+- [x] `role` es `NOT NULL` sin default y `status` tiene default `active`.
+- [x] `daycare_id` es nullable con FK a `public.daycares(id)` y `ON DELETE SET NULL`.
+- [x] `id` tiene default `gen_random_uuid()` y FK a `auth.users(id)` con `ON DELETE CASCADE`.
+- [x] `public.users` tiene RLS activo, una sola policy `SELECT` para `authenticated`, cero policies de escritura y `anon` sin `SELECT`.
+- [x] La migración deja `public.users` con cero filas; el staff llega por alta manual posterior, no por seed.
+- [x] El staff `joel@google.com` existe en `auth.users` y tiene fila en `public.users` con `role staff`, `status active` y `daycare` Sala Soles.
+- [x] El historial remoto tiene una migración `create_users` cuyo version es el timestamp del archivo local.
+- [x] No hay passwords ni secretos en `specs/`, migraciones o git.
+- [x] No hay cambios en `app/`, `lib/` ni `@supabase/supabase-js` en `package.json`. `.env` no se commitea.
 
 ## Decisions
 
