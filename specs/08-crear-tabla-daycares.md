@@ -1,6 +1,6 @@
 # SPEC 08 — Tabla daycares
 
-> **Status:** Approved
+> **Status:** Implemented
 > **Depends on:** ninguna
 > **Date:** 2026-09-28
 > **Objective:** Crear la tabla `public.daycares` con dirección y cuatro filas en el proyecto Supabase remoto con una migración versionada en el repo y RLS que deja leer solo a `authenticated`.
@@ -64,13 +64,13 @@ Identificadores en inglés y en minúsculas. Sin `UNIQUE` en `name`. El `insert`
 
 ## Acceptance criteria
 
-- [ ] Existe un solo archivo nuevo `supabase/migrations/<timestamp>_create_daycares.sql` creado por `migration new`.
-- [ ] El SQL crea solo `public.daycares` con `id`, `name`, `address` y `created_at`, habilita RLS, revoca `all` a `anon` y `authenticated`, otorga `select` a `authenticated` e inserta las cuatro filas.
-- [ ] El historial remoto no contiene `create_prueba_test_table` ni `drop_prueba_test_table`.
-- [ ] El historial remoto tiene una migración `create_daycares` cuyo version es el timestamp del archivo local.
-- [ ] `public` solo tiene `daycares`, con RLS activo, una sola policy `SELECT` para `authenticated`, cero policies de escritura y `anon` sin `SELECT`.
-- [ ] `daycares` tiene exactamente cuatro filas con esos nombres y direcciones, incluida `Guardería Sala Soles`.
-- [ ] No hay cambios en `app/`, `lib/` ni `@supabase/supabase-js` en `package.json`. `.env` no se commitea.
+- [x] Existe un solo archivo nuevo `supabase/migrations/<timestamp>_create_daycares.sql` creado por `migration new`.
+- [x] El SQL crea solo `public.daycares` con `id`, `name`, `address` y `created_at`, habilita RLS, revoca `all` a `anon` y `authenticated`, otorga `select` a `authenticated` e inserta las cuatro filas.
+- [x] El historial remoto no contiene `create_prueba_test_table` ni `drop_prueba_test_table`.
+- [x] El historial remoto tiene una migración `create_daycares` cuyo version es el timestamp del archivo local.
+- [x] `public` solo tiene `daycares`, con RLS activo, una sola policy `SELECT` para `authenticated`, cero policies de escritura y `anon` sin `SELECT`.
+- [x] `daycares` tiene exactamente cuatro filas con esos nombres y direcciones, incluida `Guardería Sala Soles`.
+- [x] No hay cambios en `app/`, `lib/` ni `@supabase/supabase-js` en `package.json`. `.env` no se commitea.
 
 ## Decisions
 
