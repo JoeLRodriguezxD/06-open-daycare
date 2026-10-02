@@ -1,25 +1,42 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { validateLogin, type FormErrors } from "@/lib/auth-validation";
+import { login } from "@/app/login/actions";
 
 const inputBase =
   "w-full rounded-[14px] border-[1.5px] bg-white px-4 py-[14px] text-[15px] outline-none";
 
 export function LoginForm() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [isPending, setIsPending] = useState(false);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const validationErrors = validateLogin({ email, password });
     setErrors(validationErrors);
-    if (Object.keys(validationErrors).length === 0) {
-      router.push("/");
+    if (Object.keys(validationErrors).length > 0) {
+      setServerError(null);
+      return;
+    }
+    setServerError(null);
+    setIsPending(true);
+    try {
+      const formData = new FormData();
+      formData.set("email", email.trim());
+      formData.set("password", password);
+      const result = await login(formData);
+      if (result?.error) {
+        setServerError(result.error);
+      }
+    } catch {
+      setServerError("No se pudo iniciar sesión. Intentá de nuevo");
+    } finally {
+      setIsPending(false);
     }
   }
 
@@ -91,7 +108,8 @@ export function LoginForm() {
 
       <button
         type="submit"
-        className="block w-full cursor-pointer rounded-[15px] p-[15px] text-base font-extrabold text-white"
+        disabled={isPending}
+        className="block w-full cursor-pointer rounded-[15px] p-[15px] text-base font-extrabold text-white disabled:cursor-wait disabled:opacity-70"
         style={{
           background:
             "linear-gradient(180deg, var(--auth-button-start), var(--auth-button-end))",
@@ -100,6 +118,11 @@ export function LoginForm() {
       >
         Iniciar sesión
       </button>
+      {serverError ? (
+        <p role="alert" className="text-auth-error mt-4 text-center text-[13.5px] font-bold">
+          {serverError}
+        </p>
+      ) : null}
 
       <p className="text-secondary mt-6 text-center text-[14.5px]">
         ¿Te invitó la guardería?{" "}

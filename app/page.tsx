@@ -4,17 +4,20 @@ import { MobileNav } from "./components/home/MobileNav";
 import { PostCard } from "./components/home/PostCard";
 import { Sidebar } from "./components/home/Sidebar";
 import { feedPosts } from "@/lib/feed-mock";
+import { getSessionUser } from "@/lib/session-user";
 
-export default function Home() {
+export default async function Home() {
+  const user = await getSessionUser();
+
   return (
     <div className="bg-background min-h-screen">
       <div className="flex min-h-screen">
         <div className="hidden md:block">
-          <Sidebar />
+          <Sidebar user={user} />
         </div>
 
         <main className="min-w-0 flex-1">
-          <MobileNav />
+          <MobileNav user={user} />
 
           <div className="mx-auto w-full max-w-[760px] px-5 pt-[34px] pb-20 md:px-10">
             <FeedHeader />

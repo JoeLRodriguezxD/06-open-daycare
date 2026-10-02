@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { Avatar } from "../shared/Avatar";
 import { CreatePostTrigger } from "./CreatePostTrigger";
-import { currentUser } from "@/lib/feed-mock";
+import { signOut } from "@/app/login/actions";
+import { currentUser as fallbackUser } from "@/lib/feed-mock";
+import type { SessionUser } from "@/lib/session-user";
 
 const navLinkBase =
   "flex items-center gap-3 rounded-xl px-3 py-[11px] text-[14.5px]";
@@ -10,9 +12,13 @@ export type SidebarActiveItem = "feed" | "kids";
 
 type SidebarProps = {
   activeItem?: SidebarActiveItem;
+  user?: SessionUser | null;
 };
 
-export function Sidebar({ activeItem = "feed" }: SidebarProps) {
+export function Sidebar({ activeItem = "feed", user }: SidebarProps) {
+  const displayName = user?.name ?? fallbackUser.name;
+  const displayDetail = user?.detail || fallbackUser.role;
+  const displayInitial = user?.initial ?? fallbackUser.initial;
   return (
     <aside className="bg-surface border-border sticky top-0 flex h-screen w-[248px] flex-none flex-col border-r px-4 py-6">
       <Link href="/" className="flex items-center gap-[11px] px-2 pt-1 pb-[22px]">
@@ -154,25 +160,14 @@ export function Sidebar({ activeItem = "feed" }: SidebarProps) {
           </svg>
           Mi cuenta
         </Link>
-      </nav>
-
-      <div className="border-border mt-[10px] border-t pt-[14px]">
-        <div className="flex items-center gap-[11px] px-2 py-1.5">
-          <Avatar initial={currentUser.initial} tone="user" size={38} />
-          <div className="min-w-0 flex-1">
-            <div className="text-foreground truncate text-sm font-extrabold">
-              {currentUser.name}
-            </div>
-            <div className="text-muted text-xs">{currentUser.role}</div>
-          </div>
-          <Link
-            href="/login"
-            title="Cerrar sesión"
-            className="bg-background text-secondary flex h-8 w-8 flex-none items-center justify-center rounded-[10px]"
+        <form action={signOut}>
+          <button
+            type="submit"
+            className={`${navLinkBase} text-nav-inactive w-full cursor-pointer font-semibold`}
           >
             <svg
-              width="16"
-              height="16"
+              width="19"
+              height="19"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -182,7 +177,46 @@ export function Sidebar({ activeItem = "feed" }: SidebarProps) {
             >
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
             </svg>
-          </Link>
+            Cerrar sesión
+          </button>
+        </form>
+      </nav>
+
+      <div className="border-border mt-[10px] border-t pt-[14px]">
+        <div className="flex items-center gap-[11px] px-2 py-1.5">
+          <Avatar initial={displayInitial} tone="user" size={38} />
+          <div className="min-w-0 flex-1">
+            <div
+              className="text-foreground truncate text-sm font-extrabold"
+              title={displayName}
+            >
+              {displayName}
+            </div>
+            <div className="text-muted text-xs leading-tight break-words" title={displayDetail}>
+              {displayDetail}
+            </div>
+          </div>
+          <form action={signOut} className="flex-none">
+            <button
+              type="submit"
+              title="Cerrar sesión"
+              aria-label="Cerrar sesión"
+              className="bg-background text-secondary flex h-8 w-8 cursor-pointer items-center justify-center rounded-[10px]"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+              </svg>
+            </button>
+          </form>
         </div>
       </div>
     </aside>

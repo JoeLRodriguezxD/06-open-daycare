@@ -3,13 +3,15 @@
 import { useEffect, useState } from "react";
 import { Sidebar, type SidebarActiveItem } from "./Sidebar";
 import { Avatar } from "../shared/Avatar";
-import { currentUser } from "@/lib/feed-mock";
+import { currentUser as fallbackUser } from "@/lib/feed-mock";
+import type { SessionUser } from "@/lib/session-user";
 
 type MobileNavProps = {
   activeItem?: SidebarActiveItem;
+  user?: SessionUser | null;
 };
 
-export function MobileNav({ activeItem = "feed" }: MobileNavProps) {
+export function MobileNav({ activeItem = "feed", user }: MobileNavProps) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -58,7 +60,7 @@ export function MobileNav({ activeItem = "feed" }: MobileNavProps) {
         <div className="font-display text-foreground flex-1 text-[17px] font-semibold">
           OpenDayCare
         </div>
-        <Avatar initial={currentUser.initial} tone="user" size={34} />
+        <Avatar initial={user?.initial ?? fallbackUser.initial} tone="user" size={34} />
       </header>
 
       {open ? (
@@ -89,7 +91,7 @@ export function MobileNav({ activeItem = "feed" }: MobileNavProps) {
                 <path d="M18 6 6 18M6 6l12 12" />
               </svg>
             </button>
-            <Sidebar activeItem={activeItem} />
+            <Sidebar activeItem={activeItem} user={user} />
           </div>
         </div>
       ) : null}
