@@ -16,7 +16,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## Stack
 
-- Next.js 16.3.5 (App Router) + React 19 + Tailwind CSS v4 + strict TS. Specs 01–08 implementados (ver `Estado actual`); datos aún mock en `lib/*-mock.ts`, sin backend. Supabase parcial: `supabase/` inicializado + 1 migración (`20261001072734_create_daycares.sql`); `package.json` sin `@supabase/supabase-js` ni `@supabase/ssr`, sin cliente ni conexión a DB.
+- Next.js 16.3.5 (App Router) + React 19 + Tailwind CSS v4 + strict TS. Specs 01–08 implementados (ver `Estado actual`); datos aún mock en `lib/*-mock.ts`, sin backend. Supabase parcial: `supabase/` inicializado + 1 migración (`20261001072734_create_daycares.sql`); `package.json` con `@supabase/supabase-js@^2.117.2` + `@supabase/ssr@^0.12.7`, clientes en `lib/supabase/` (`client.ts` browser, `server.ts` server con `await cookies()`, `proxy.ts` `updateSession` con `getClaims()` sin redirects) + `proxy.ts` raíz con matcher (Next.js 16, no `middleware.ts`); `.env.local` (ignorado) con `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` al proyecto `qsmqaljvnhnbodiktriw`; pantallas aún con mocks, sin queries desde `app/`.
 - Entrypoints: `app/layout.tsx`, `app/page.tsx`. Path alias `@/*` maps to repo root.
 - No test runner, no CI, no pre-commit. Do not invent test commands.
 
@@ -52,7 +52,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `opencode.json` → `references.docs` → `../07-DB-Schema/opendaycare-database-schema.md`: 13 tablas (`daycares`, `users`, `rooms`, `children`, `parent_children`, `invitations`, `posts`, `post_children`, `post_photos`, `reactions`, `comments`, `daily_summaries`, `devices` opcional) + enums en inglés (`user_role`, `user_status`, `relationship_type`, `invitation_status`, `post_type` 6 valores, `child_status`); la UI traduce a español, nunca persistir etiquetas.
 - Solo `daycares` implementado en el remoto (ver `Estado actual` spec 08): no asumir el resto de tablas/RLS/triggers existentes sin verificar con el MCP (`list_tables`/`execute_sql`).
 - Regla dura DB: TODA manipulación de la DB (DDL, RLS/policies, `grant`/`revoke`, seeds, fixes de datos/esquema) SIEMPRE vía migraciones versionadas (`supabase migration new <nombre>` + `supabase db push`, version remoto = timestamp del archivo en `supabase/migrations/`). Prohibido `apply_migration` del MCP y SQL ad-hoc como vía de escritura; el MCP es solo lectura/verificación (`list_tables`/`list_migrations`/`execute_sql` SELECT, `get_advisors`).
-- `.env.template` commiteado como plantilla (`SUPABASE_DB_PASSWORD`, excepción en `.gitignore` → `!.env.template`); secretos reales solo en `.env` local, nunca commitear.
+- `.env.template` commiteado como plantilla (`SUPABASE_DB_PASSWORD` + placeholders `NEXT_PUBLIC_SUPABASE_URL`/`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, excepción en `.gitignore` → `!.env.template`); valores reales solo en `.env`/`.env.local` (ignorados), nunca commitear.
+- Cliente Next.js (única vía app→DB): paquetes propios de Supabase `@supabase/supabase-js@^2.117.2` + `@supabase/ssr@^0.12.7` (`package.json` + lockfile). Helpers canónicos `vercel/next.js` `with-supabase` en `lib/supabase/` (`client.ts` browser vía `createBrowserClient`, `server.ts` server vía `createServerClient` + `await cookies()`, `proxy.ts` `updateSession` con `getClaims()` sin redirects) + `proxy.ts` raíz con matcher (Next.js 16, no `middleware.ts`). Env: `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Refs: `https://supabase.com/docs/guides/auth/server-side/nextjs` + `https://github.com/vercel/next.js/tree/canary/examples/with-supabase`.
 - Ubicación: todo spec DB vive en `specs/database/NN-slug.md` (ver `Specs organization`); nunca en `specs/` raíz.
 
 ## Specs organization
@@ -69,6 +70,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `/spec-impl` (`spec-impl` de `klerith/fernando-skills`): solo implementa specs con Status = Approved (cualquier idioma); si es Draft/Implemented/otro, se detiene. Busca el spec en `specs/` recursivo (`specs/` + `specs/database/`) por número/slug/ruta. Exige working tree limpio, crea/cambia a rama `spec-NN-slug` (según `AutoCreateBranch`), implementa paso a paso con pausas para revisar diff, nunca commitea solo.
 
 ## Estado actual (specs 01–09 implementados, 09 en Approved)
+
+- Supabase SSR client (2026-10-02, sin spec): instalados `@supabase/supabase-js@^2.117.2` + `@supabase/ssr@^0.12.7` (`package.json` + `package-lock.json`); creados `lib/supabase/client.ts`, `lib/supabase/server.ts`, `lib/supabase/proxy.ts` (canónico `vercel/next.js` `with-supabase` para Next.js 16: `proxy.ts` raíz con matcher, `getClaims()`, sin redirects para no romper `/` y `/login` en mocks) + `proxy.ts` raíz; `.env.local` (ignorado) con URL + publishable key de `qsmqaljvnhnbodiktriw` (URL verificada vía `get_project_url`, DB responde `select count(*) daycares` = 4); `.env.template` con placeholders. `app/page.tsx` intacto (ejemplo `todos` de la guía no aplicado, `utils/supabase/*` redirigido a `lib/supabase/*` por convención del repo + docs). Verificado `npm run lint`, `npx tsc --noEmit`, `npm run build` (15/15 rutas + Proxy). Pendiente: commitear.
 
 - `specs/database/09-crear-tabla-users.md` = Approved (2026-10-01) → implementado + verificado 2026-10-01 (12/12 checks con evidencia MCP/DB, sin fix): enums `user_role` (`staff`|`parent`|`admin`) + `user_status` (`pending`|`active`) y tabla `public.users` (FK `id` → `auth.users(id)` `CASCADE` con default `gen_random_uuid()`, `daycare_id` nullable → `daycares(id)` `SET NULL`, `role` sin default, `status` default `active`) en el proyecto remoto vía `supabase migration new` + `db push` (`supabase/migrations/20261001201522_create_users.sql`, sin seed), RLS con `revoke all` a `anon`/`authenticated`, `grant select` a `authenticated` y una sola policy `SELECT` para `authenticated`. Staff `joel@google.com` en `auth.users` con fila `public.users` (`role staff`, `status active`, `full_name Joel`, ligada a `Guardería Sala Soles`); segunda fila manual `Fernando` (staff, misma guardería). Sin cambios en `app/`/`lib/`, sin `@supabase/supabase-js`, `.env` ignorado. Pendiente: cambiar `Status` a `Implemented` y commitear.
 
@@ -110,6 +113,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Colores/radios/sombras vía tokens en `app/globals.css` (`@theme inline`), nunca hardcodeados. Fuentes solo vía `next/font/google`.
 - Navegación interna siempre con `Link` de `next/link` (incluso a rutas futuras aún no creadas); nunca `<a href="/…">`.
 - Estructura: `app/components/shared/` (reutilizables) + subcarpeta por página (`app/components/home/`); futuras páginas agregan su carpeta (`ninos`, `avisos`…).
+- Supabase desde `app/`: importar solo vía `@/lib/supabase/client` (browser) o `@/lib/supabase/server` (server/actions/routes, un cliente nuevo por request, nunca global); nunca `createClient` inline ni `utils/supabase/*`; en servidor verificar con `getClaims()`, nunca `getSession()`.
 
 ## Meta-regla: mantener AGENTS.md siempre actualizado (obligatorio)
 
