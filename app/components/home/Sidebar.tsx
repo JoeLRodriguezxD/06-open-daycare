@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Avatar } from "../shared/Avatar";
 import { CreatePostTrigger } from "./CreatePostTrigger";
+import { signOut } from "@/app/login/actions";
 import { currentUser } from "@/lib/feed-mock";
 
 const navLinkBase =
@@ -154,6 +155,26 @@ export function Sidebar({ activeItem = "feed" }: SidebarProps) {
           </svg>
           Mi cuenta
         </Link>
+        <form action={signOut}>
+          <button
+            type="submit"
+            className={`${navLinkBase} text-nav-inactive w-full cursor-pointer font-semibold`}
+          >
+            <svg
+              width="19"
+              height="19"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+            </svg>
+            Cerrar sesión
+          </button>
+        </form>
       </nav>
 
       <div className="border-border mt-[10px] border-t pt-[14px]">
@@ -165,24 +186,27 @@ export function Sidebar({ activeItem = "feed" }: SidebarProps) {
             </div>
             <div className="text-muted text-xs">{currentUser.role}</div>
           </div>
-          <Link
-            href="/login"
-            title="Cerrar sesión"
-            className="bg-background text-secondary flex h-8 w-8 flex-none items-center justify-center rounded-[10px]"
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+          <form action={signOut} className="flex-none">
+            <button
+              type="submit"
+              title="Cerrar sesión"
+              aria-label="Cerrar sesión"
+              className="bg-background text-secondary flex h-8 w-8 cursor-pointer items-center justify-center rounded-[10px]"
             >
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
-            </svg>
-          </Link>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+              </svg>
+            </button>
+          </form>
         </div>
       </div>
     </aside>
