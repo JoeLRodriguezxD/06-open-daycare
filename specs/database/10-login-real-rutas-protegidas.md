@@ -1,6 +1,6 @@
 # SPEC 10 — Login real con email y protección de rutas con Supabase
 
-> **Status:** Approved
+> **Status:** Implemented
 > **Depends on:** SPEC 03, SPEC 09
 > **Date:** 2026-10-02
 > **Objective:** Conectar /login a Supabase Auth con email y contraseña y proteger todas las rutas salvo /login y /activate-account mediante proxy.ts con getClaims().
@@ -55,17 +55,17 @@ Convenciones:
 
 ## Acceptance criteria
 
-- [ ] El login válido con `joel@google.com` navega a `/` con sesión Supabase activa.
-- [ ] Email o contraseña inválidos muestran un error en español bajo el form y no navegan.
-- [ ] El submit vacío muestra los errores locales en español y no llama a Supabase.
-- [ ] El usuario con `status` pending o sin fila en `public.users` ve un error en español y queda sin sesión.
-- [ ] Sin sesión, `/`, `/kids` y `/kids/[slug]` redirigen a `/login`.
-- [ ] Con sesión, `/login` y `/activate-account` redirigen a `/`.
-- [ ] `/activate-account` sigue visible sin sesión con su mock intacto.
-- [ ] Cerrar sesión desde el Sidebar y desde el MobileNav termina en `/login` sin sesión.
-- [ ] `npm run lint` pasa sin errores.
-- [ ] `npx tsc --noEmit` pasa sin errores.
-- [ ] `npm run build` pasa sin errores.
+- [x] El login válido con `joel@google.com` navega a `/` con sesión Supabase activa.
+- [x] Email o contraseña inválidos muestran un error en español bajo el form y no navegan.
+- [x] El submit vacío muestra los errores locales en español y no llama a Supabase.
+- [x] El usuario con `status` pending o sin fila en `public.users` ve un error en español y queda sin sesión.
+- [x] Sin sesión, `/`, `/kids` y `/kids/[slug]` redirigen a `/login`.
+- [x] Con sesión, `/login` y `/activate-account` redirigen a `/`.
+- [x] `/activate-account` sigue visible sin sesión con su mock intacto.
+- [x] Cerrar sesión desde el Sidebar y desde el MobileNav termina en `/login` sin sesión.
+- [x] `npm run lint` pasa sin errores.
+- [x] `npx tsc --noEmit` pasa sin errores.
+- [x] `npm run build` pasa sin errores.
 
 ## Decisions
 
