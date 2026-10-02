@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Avatar } from "../shared/Avatar";
 import { CreatePostTrigger } from "./CreatePostTrigger";
 import { signOut } from "@/app/login/actions";
-import { currentUser } from "@/lib/feed-mock";
+import { currentUser as fallbackUser } from "@/lib/feed-mock";
+import type { SessionUser } from "@/lib/session-user";
 
 const navLinkBase =
   "flex items-center gap-3 rounded-xl px-3 py-[11px] text-[14.5px]";
@@ -11,9 +12,13 @@ export type SidebarActiveItem = "feed" | "kids";
 
 type SidebarProps = {
   activeItem?: SidebarActiveItem;
+  user?: SessionUser | null;
 };
 
-export function Sidebar({ activeItem = "feed" }: SidebarProps) {
+export function Sidebar({ activeItem = "feed", user }: SidebarProps) {
+  const displayName = user?.name ?? fallbackUser.name;
+  const displayDetail = user?.detail || fallbackUser.role;
+  const displayInitial = user?.initial ?? fallbackUser.initial;
   return (
     <aside className="bg-surface border-border sticky top-0 flex h-screen w-[248px] flex-none flex-col border-r px-4 py-6">
       <Link href="/" className="flex items-center gap-[11px] px-2 pt-1 pb-[22px]">
@@ -179,12 +184,17 @@ export function Sidebar({ activeItem = "feed" }: SidebarProps) {
 
       <div className="border-border mt-[10px] border-t pt-[14px]">
         <div className="flex items-center gap-[11px] px-2 py-1.5">
-          <Avatar initial={currentUser.initial} tone="user" size={38} />
+          <Avatar initial={displayInitial} tone="user" size={38} />
           <div className="min-w-0 flex-1">
-            <div className="text-foreground truncate text-sm font-extrabold">
-              {currentUser.name}
+            <div
+              className="text-foreground truncate text-sm font-extrabold"
+              title={displayName}
+            >
+              {displayName}
             </div>
-            <div className="text-muted text-xs">{currentUser.role}</div>
+            <div className="text-muted text-xs leading-tight break-words" title={displayDetail}>
+              {displayDetail}
+            </div>
           </div>
           <form action={signOut} className="flex-none">
             <button

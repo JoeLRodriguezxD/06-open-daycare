@@ -7,6 +7,7 @@ import { KidFacts } from "../../components/kids/KidFacts";
 import { LinkedParents } from "../../components/kids/LinkedParents";
 import { ProfileHeader } from "../../components/kids/ProfileHeader";
 import { getKidBySlug, kids } from "@/lib/kids-mock";
+import { getSessionUser } from "@/lib/session-user";
 
 export function generateStaticParams() {
   return kids.map((kid) => ({ slug: kid.slug }));
@@ -24,15 +25,17 @@ export default async function KidProfilePage({ params }: KidProfilePageProps) {
     notFound();
   }
 
+  const user = await getSessionUser();
+
   return (
     <div className="bg-background min-h-screen">
       <div className="flex min-h-screen">
         <div className="hidden md:block">
-          <Sidebar activeItem="kids" />
+          <Sidebar activeItem="kids" user={user} />
         </div>
 
         <main className="min-w-0 flex-1">
-          <MobileNav activeItem="kids" />
+          <MobileNav activeItem="kids" user={user} />
 
           <div className="mx-auto w-full max-w-[820px] px-5 pt-[34px] pb-20 md:px-10">
             <Link

@@ -3,17 +3,20 @@ import { Sidebar } from "../components/home/Sidebar";
 import { AddKidTrigger } from "../components/kids/AddKidTrigger";
 import { KidSearch } from "../components/kids/KidSearch";
 import { kids } from "@/lib/kids-mock";
+import { getSessionUser } from "@/lib/session-user";
 
-export default function KidsPage() {
+export default async function KidsPage() {
+  const user = await getSessionUser();
+
   return (
     <div className="bg-background min-h-screen">
       <div className="flex min-h-screen">
         <div className="hidden md:block">
-          <Sidebar activeItem="kids" />
+          <Sidebar activeItem="kids" user={user} />
         </div>
 
         <main className="min-w-0 flex-1">
-          <MobileNav activeItem="kids" />
+          <MobileNav activeItem="kids" user={user} />
 
           <div className="mx-auto w-full max-w-[880px] px-5 pt-[34px] pb-20 md:px-10">
             <div className="mb-[22px] flex items-end justify-between gap-4">
