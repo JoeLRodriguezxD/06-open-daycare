@@ -90,6 +90,7 @@ export function EditKidTrigger({ kid, rooms, roomsError = null }: EditKidTrigger
             )?.id ?? ""
           }
           title="Editar niño"
+          mode="edit"
         />
       ) : null}
     </>

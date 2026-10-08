@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { createChild } from "@/app/kids/actions";
 import {
   validateKidForm,
   type AddKidValues,
@@ -16,6 +18,7 @@ type AddKidModalProps = {
   initialValues?: AddKidValues;
   initialRoomId?: string;
   title?: string;
+  mode?: "create" | "edit";
 };
 
 const emptyValues: AddKidValues = {
@@ -42,13 +45,17 @@ export function AddKidModal({
   initialValues = emptyValues,
   initialRoomId = "",
   title = "Agregar niño",
+  mode = "create",
 }: AddKidModalProps) {
+  const router = useRouter();
   const [fullName, setFullName] = useState(initialValues.fullName);
   const [birthDate, setBirthDate] = useState(initialValues.birthDate);
   const [roomId, setRoomId] = useState(initialRoomId);
   const [allergies, setAllergies] = useState(initialValues.allergies);
   const [medicalNotes, setMedicalNotes] = useState(initialValues.medicalNotes);
   const [errors, setErrors] = useState<KidFormErrors>({});
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
   const roomsUnavailable = !isLoadingRooms && !roomsError && rooms.length === 0;
 
   useEffect(() => {
@@ -73,7 +80,7 @@ export function AddKidModal({
     }
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const values: AddKidValues = {
       fullName,
@@ -84,8 +91,33 @@ export function AddKidModal({
     };
     const validationErrors = validateKidForm(values);
     setErrors(validationErrors);
-    if (Object.keys(validationErrors).length === 0) {
+    if (Object.keys(validationErrors).length > 0) {
+      return;
+    }
+    setServerError(null);
+    if (mode === "edit") {
       onClose();
+      return;
+    }
+    setIsSaving(true);
+    try {
+      const result = await createChild({
+        fullName: fullName.trim(),
+        birthDate: birthDate.trim(),
+        roomId,
+        allergies,
+        medicalNotes,
+      });
+      if (result.error) {
+        setServerError(result.error);
+        return;
+      }
+      onClose();
+      router.refresh();
+    } catch {
+      setServerError("No se pudo guardar. Intentá de nuevo");
+    } finally {
+      setIsSaving(false);
     }
   }
 
@@ -115,9 +147,10 @@ export function AddKidModal({
             <div className="flex flex-none items-center gap-3">
               <button
                 type="submit"
-                className="text-accent-deep cursor-pointer text-[15px] font-extrabold"
+                disabled={isSaving}
+                className="text-accent-deep cursor-pointer text-[15px] font-extrabold disabled:cursor-wait disabled:opacity-60"
               >
-                Guardar
+                {isSaving ? "Guardando…" : "Guardar"}
               </button>
               <button
                 type="button"
@@ -298,6 +331,11 @@ export function AddKidModal({
                 color: "var(--foreground)",
               }}
             />
+            {serverError ? (
+              <p role="alert" className={`${errorBase} mt-[14px]`}>
+                {serverError}
+              </p>
+            ) : null}
           </div>
         </form>
       </div>
