@@ -1,12 +1,15 @@
 import { Avatar } from "../shared/Avatar";
 import { EditKidTrigger } from "./EditKidTrigger";
 import type { Kid } from "@/lib/kids-mock";
+import type { RoomOption } from "@/lib/rooms";
 
 type ProfileHeaderProps = {
   kid: Kid;
+  rooms: RoomOption[];
+  roomsError?: string | null;
 };
 
-export function ProfileHeader({ kid }: ProfileHeaderProps) {
+export function ProfileHeader({ kid, rooms, roomsError = null }: ProfileHeaderProps) {
   return (
     <div className="flex items-center gap-[18px]">
       <Avatar
@@ -23,7 +26,7 @@ export function ProfileHeader({ kid }: ProfileHeaderProps) {
           {kid.ageLabel} · Sala {kid.classroom}
         </p>
       </div>
-      <EditKidTrigger kid={kid} />
+      <EditKidTrigger kid={kid} rooms={rooms} roomsError={roomsError} />
     </div>
   );
 }

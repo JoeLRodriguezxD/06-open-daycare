@@ -2,8 +2,14 @@
 
 import { useState } from "react";
 import { AddKidModal } from "./AddKidModal";
+import type { RoomOption } from "@/lib/rooms";
 
-export function AddKidTrigger() {
+type AddKidTriggerProps = {
+  rooms: RoomOption[];
+  roomsError?: string | null;
+};
+
+export function AddKidTrigger({ rooms, roomsError = null }: AddKidTriggerProps) {
   const [open, setOpen] = useState(false);
 
   function handleOpen() {
@@ -42,7 +48,7 @@ export function AddKidTrigger() {
         </svg>
         Agregar niño
       </button>
-      {open ? <AddKidModal onClose={handleClose} /> : null}
+      {open ? <AddKidModal onClose={handleClose} rooms={rooms} roomsError={roomsError} /> : null}
     </>
   );
 }

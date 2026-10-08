@@ -3,10 +3,12 @@ import { Sidebar } from "../components/home/Sidebar";
 import { AddKidTrigger } from "../components/kids/AddKidTrigger";
 import { KidSearch } from "../components/kids/KidSearch";
 import { kids } from "@/lib/kids-mock";
+import { getRooms } from "@/lib/rooms";
 import { getSessionUser } from "@/lib/session-user";
 
 export default async function KidsPage() {
   const user = await getSessionUser();
+  const { rooms, error: roomsError } = await getRooms();
 
   return (
     <div className="bg-background min-h-screen">
@@ -28,7 +30,7 @@ export default async function KidsPage() {
                   Niños
                 </h1>
               </div>
-              <AddKidTrigger />
+              <AddKidTrigger rooms={rooms} roomsError={roomsError} />
             </div>
 
             <KidSearch kids={kids} />

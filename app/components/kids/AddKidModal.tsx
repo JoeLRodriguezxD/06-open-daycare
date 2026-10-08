@@ -2,16 +2,19 @@
 
 import { useEffect, useState } from "react";
 import {
-  CLASSROOM_LABELS,
   validateKidForm,
   type AddKidValues,
-  type Classroom,
   type KidFormErrors,
 } from "@/lib/kid-form-validation";
+import type { RoomOption } from "@/lib/rooms";
 
 type AddKidModalProps = {
   onClose: () => void;
+  rooms: RoomOption[];
+  roomsError?: string | null;
+  isLoadingRooms?: boolean;
   initialValues?: AddKidValues;
+  initialRoomId?: string;
   title?: string;
 };
 
@@ -33,17 +36,20 @@ const errorBase = "text-auth-error mt-[6px] text-[13.5px] font-bold";
 
 export function AddKidModal({
   onClose,
+  rooms,
+  roomsError = null,
+  isLoadingRooms = false,
   initialValues = emptyValues,
+  initialRoomId = "",
   title = "Agregar niño",
 }: AddKidModalProps) {
   const [fullName, setFullName] = useState(initialValues.fullName);
   const [birthDate, setBirthDate] = useState(initialValues.birthDate);
-  const [classroom, setClassroom] = useState<Classroom | "">(
-    initialValues.classroom,
-  );
+  const [roomId, setRoomId] = useState(initialRoomId);
   const [allergies, setAllergies] = useState(initialValues.allergies);
   const [medicalNotes, setMedicalNotes] = useState(initialValues.medicalNotes);
   const [errors, setErrors] = useState<KidFormErrors>({});
+  const roomsUnavailable = !isLoadingRooms && !roomsError && rooms.length === 0;
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -72,7 +78,7 @@ export function AddKidModal({
     const values: AddKidValues = {
       fullName,
       birthDate,
-      classroom,
+      classroom: roomId === "" ? "" : "SOLES",
       allergies,
       medicalNotes,
     };
@@ -197,29 +203,32 @@ export function AddKidModal({
                 <div className="relative">
                   <select
                     id="add-kid-classroom"
-                    value={classroom}
-                    onChange={(event) =>
-                      setClassroom(event.target.value as Classroom | "")
-                    }
+                    value={roomId}
+                    onChange={(event) => setRoomId(event.target.value)}
                     aria-label="Sala"
+                    disabled={isLoadingRooms || roomsError !== null || roomsUnavailable}
                     className={`${inputBase} cursor-pointer appearance-none pr-10 font-bold`}
                     style={{
                       borderColor: errors.classroom
                         ? "var(--auth-error)"
                         : "var(--auth-input-border)",
                       color:
-                        classroom === ""
+                        roomId === ""
                           ? "var(--auth-placeholder)"
                           : "var(--foreground)",
                     }}
                   >
-                    <option value="">Elegir sala</option>
-                    {(Object.keys(CLASSROOM_LABELS) as Classroom[]).map(
-                      (option) => (
-                        <option key={option} value={option}>
-                          {CLASSROOM_LABELS[option]}
-                        </option>
-                      ),
+                    {isLoadingRooms ? (
+                      <option value="">Cargando salas…</option>
+                    ) : (
+                      <>
+                        <option value="">Elegir sala</option>
+                        {rooms.map((room) => (
+                          <option key={room.id} value={room.id}>
+                            {room.name}
+                          </option>
+                        ))}
+                      </>
                     )}
                   </select>
                   <svg
@@ -240,6 +249,16 @@ export function AddKidModal({
                 {errors.classroom ? (
                   <p role="alert" className={errorBase}>
                     {errors.classroom}
+                  </p>
+                ) : null}
+                {roomsError ? (
+                  <p role="alert" className={errorBase}>
+                    {roomsError}
+                  </p>
+                ) : null}
+                {!roomsError && roomsUnavailable ? (
+                  <p role="alert" className={errorBase}>
+                    No hay salas disponibles. Pedí ayuda a la guardería
                   </p>
                 ) : null}
               </div>
