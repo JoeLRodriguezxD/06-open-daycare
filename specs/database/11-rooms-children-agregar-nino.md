@@ -1,6 +1,6 @@
 # SPEC 11 — Rooms, children y alta de niños conectada a Supabase
 
-> **Status:** Approved
+> **Status:** Implemented
 > **Depends on:** SPEC 02, SPEC 04, SPEC 08, SPEC 09, SPEC 10
 > **Date:** 2026-10-08
 > **Objective:** Crear las tablas `rooms` y `children` con seed de tres salas en Supabase y conectar el alta de niños y la lista de `/kids` a la base de datos.
@@ -136,23 +136,23 @@ Convenciones:
 
 ## Acceptance criteria
 
-- [ ] Existe `supabase/migrations/<timestamp>_create_rooms.sql` creado por `migration new` con solo la tabla `public.rooms` y el seed de `Soles`, `Lunas` y `Estrellas`.
-- [ ] Existe `supabase/migrations/<timestamp>_create_children.sql` creado por `migration new` con solo el enum `child_status` (`active`, `archived`) y la tabla `public.children`.
-- [ ] `rooms.daycare_id` es `NOT NULL` con FK a `daycares(id)` y `ON DELETE CASCADE`, y existe `UNIQUE (daycare_id, name)`.
-- [ ] `children.room_id` es `NOT NULL` con FK a `rooms(id)`; `status` tiene default `active`, `enrolled_at` default `current_date` y `photo_consent` default `true`.
-- [ ] `rooms` tiene RLS activo, una sola policy `SELECT` para `authenticated` y cero policies de escritura.
-- [ ] `children` tiene RLS activo, policies `SELECT` e `INSERT` para `authenticated` y cero policies de `UPDATE` o `DELETE`.
-- [ ] El historial remoto tiene ambas migraciones en orden rooms → children con el version igual al timestamp de cada archivo.
-- [ ] El select SALA del modal lista las salas desde `public.rooms` y muestra `Cargando salas…` mientras carga.
-- [ ] Guardar con datos válidos inserta la fila en `children` con el mapeo completo, cierra el modal y la lista muestra el niño nuevo con su sala.
-- [ ] Guardar con error de Supabase muestra el error en español bajo el form sin cerrar ni navegar.
-- [ ] La validación local (`validateKidForm`) sigue bloqueando el submit vacío o inválido sin llamar a Supabase.
-- [ ] `/kids` con tabla vacía muestra el estado vacío en español y con altas muestra los niños reales con join a sala.
-- [ ] `/kids/[slug]` sigue leyendo del mock (`getKidBySlug`, `notFound()` en slug inexistente) sin cambios.
-- [ ] No hay passwords ni secretos en `specs/`, migraciones o git; `.env` no se commitea.
-- [ ] `npm run lint` pasa sin errores.
-- [ ] `npx tsc --noEmit` pasa sin errores.
-- [ ] `npm run build` pasa sin errores.
+- [x] Existe `supabase/migrations/<timestamp>_create_rooms.sql` creado por `migration new` con solo la tabla `public.rooms` y el seed de `Soles`, `Lunas` y `Estrellas`.
+- [x] Existe `supabase/migrations/<timestamp>_create_children.sql` creado por `migration new` con solo el enum `child_status` (`active`, `archived`) y la tabla `public.children`.
+- [x] `rooms.daycare_id` es `NOT NULL` con FK a `daycares(id)` y `ON DELETE CASCADE`, y existe `UNIQUE (daycare_id, name)`.
+- [x] `children.room_id` es `NOT NULL` con FK a `rooms(id)`; `status` tiene default `active`, `enrolled_at` default `current_date` y `photo_consent` default `true`.
+- [x] `rooms` tiene RLS activo, una sola policy `SELECT` para `authenticated` y cero policies de escritura.
+- [x] `children` tiene RLS activo, policies `SELECT` e `INSERT` para `authenticated` y cero policies de `UPDATE` o `DELETE`.
+- [x] El historial remoto tiene ambas migraciones en orden rooms → children con el version igual al timestamp de cada archivo.
+- [x] El select SALA del modal lista las salas desde `public.rooms` y muestra `Cargando salas…` mientras carga.
+- [x] Guardar con datos válidos inserta la fila en `children` con el mapeo completo, cierra el modal y la lista muestra el niño nuevo con su sala.
+- [x] Guardar con error de Supabase muestra el error en español bajo el form sin cerrar ni navegar.
+- [x] La validación local (`validateKidForm`) sigue bloqueando el submit vacío o inválido sin llamar a Supabase.
+- [x] `/kids` con tabla vacía muestra el estado vacío en español y con altas muestra los niños reales con join a sala.
+- [x] `/kids/[slug]` sigue leyendo del mock (`getKidBySlug`, `notFound()` en slug inexistente) sin cambios.
+- [x] No hay passwords ni secretos en `specs/`, migraciones o git; `.env` no se commitea.
+- [x] `npm run lint` pasa sin errores.
+- [x] `npx tsc --noEmit` pasa sin errores.
+- [x] `npm run build` pasa sin errores.
 
 ## Decisions
 
