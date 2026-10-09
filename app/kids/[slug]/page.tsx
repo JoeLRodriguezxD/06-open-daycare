@@ -7,6 +7,7 @@ import { KidFacts } from "../../components/kids/KidFacts";
 import { LinkedParents } from "../../components/kids/LinkedParents";
 import { ProfileHeader } from "../../components/kids/ProfileHeader";
 import { getKidBySlug, kids } from "@/lib/kids-mock";
+import { getRooms } from "@/lib/rooms";
 import { getSessionUser } from "@/lib/session-user";
 
 export function generateStaticParams() {
@@ -26,6 +27,7 @@ export default async function KidProfilePage({ params }: KidProfilePageProps) {
   }
 
   const user = await getSessionUser();
+  const { rooms, error: roomsError } = await getRooms();
 
   return (
     <div className="bg-background min-h-screen">
@@ -60,7 +62,7 @@ export default async function KidProfilePage({ params }: KidProfilePageProps) {
 
             <div className="flex flex-wrap items-start gap-[26px]">
               <div className="flex min-w-[300px] flex-1 flex-col gap-[18px]">
-                <ProfileHeader kid={kid} />
+                <ProfileHeader kid={kid} rooms={rooms} roomsError={roomsError} />
                 {kid.allergyNotes ? (
                   <AllergyNotes notes={kid.allergyNotes} />
                 ) : null}

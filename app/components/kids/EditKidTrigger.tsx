@@ -4,9 +4,12 @@ import { useState } from "react";
 import { AddKidModal } from "./AddKidModal";
 import type { AddKidValues, Classroom } from "@/lib/kid-form-validation";
 import type { Kid } from "@/lib/kids-mock";
+import type { RoomOption } from "@/lib/rooms";
 
 type EditKidTriggerProps = {
   kid: Kid;
+  rooms: RoomOption[];
+  roomsError?: string | null;
 };
 
 const monthNumbers: Record<string, string> = {
@@ -54,7 +57,7 @@ function toFormValues(kid: Kid): AddKidValues {
   };
 }
 
-export function EditKidTrigger({ kid }: EditKidTriggerProps) {
+export function EditKidTrigger({ kid, rooms, roomsError = null }: EditKidTriggerProps) {
   const [open, setOpen] = useState(false);
 
   function handleOpen() {
@@ -78,8 +81,16 @@ export function EditKidTrigger({ kid }: EditKidTriggerProps) {
       {open ? (
         <AddKidModal
           onClose={handleClose}
+          rooms={rooms}
+          roomsError={roomsError}
           initialValues={toFormValues(kid)}
+          initialRoomId={
+            rooms.find(
+              (room) => room.name.toLowerCase() === kid.classroom.toLowerCase(),
+            )?.id ?? ""
+          }
           title="Editar niño"
+          mode="edit"
         />
       ) : null}
     </>

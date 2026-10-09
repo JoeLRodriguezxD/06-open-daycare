@@ -1,18 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { createChild } from "@/app/kids/actions";
 import {
-  CLASSROOM_LABELS,
   validateKidForm,
   type AddKidValues,
-  type Classroom,
   type KidFormErrors,
 } from "@/lib/kid-form-validation";
+import type { RoomOption } from "@/lib/rooms";
 
 type AddKidModalProps = {
   onClose: () => void;
+  rooms: RoomOption[];
+  roomsError?: string | null;
+  isLoadingRooms?: boolean;
   initialValues?: AddKidValues;
+  initialRoomId?: string;
   title?: string;
+  mode?: "create" | "edit";
 };
 
 const emptyValues: AddKidValues = {
@@ -33,17 +39,24 @@ const errorBase = "text-auth-error mt-[6px] text-[13.5px] font-bold";
 
 export function AddKidModal({
   onClose,
+  rooms,
+  roomsError = null,
+  isLoadingRooms = false,
   initialValues = emptyValues,
+  initialRoomId = "",
   title = "Agregar niño",
+  mode = "create",
 }: AddKidModalProps) {
+  const router = useRouter();
   const [fullName, setFullName] = useState(initialValues.fullName);
   const [birthDate, setBirthDate] = useState(initialValues.birthDate);
-  const [classroom, setClassroom] = useState<Classroom | "">(
-    initialValues.classroom,
-  );
+  const [roomId, setRoomId] = useState(initialRoomId);
   const [allergies, setAllergies] = useState(initialValues.allergies);
   const [medicalNotes, setMedicalNotes] = useState(initialValues.medicalNotes);
   const [errors, setErrors] = useState<KidFormErrors>({});
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const roomsUnavailable = !isLoadingRooms && !roomsError && rooms.length === 0;
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -67,19 +80,44 @@ export function AddKidModal({
     }
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const values: AddKidValues = {
       fullName,
       birthDate,
-      classroom,
+      classroom: roomId === "" ? "" : "SOLES",
       allergies,
       medicalNotes,
     };
     const validationErrors = validateKidForm(values);
     setErrors(validationErrors);
-    if (Object.keys(validationErrors).length === 0) {
+    if (Object.keys(validationErrors).length > 0) {
+      return;
+    }
+    setServerError(null);
+    if (mode === "edit") {
       onClose();
+      return;
+    }
+    setIsSaving(true);
+    try {
+      const result = await createChild({
+        fullName: fullName.trim(),
+        birthDate: birthDate.trim(),
+        roomId,
+        allergies,
+        medicalNotes,
+      });
+      if (result.error) {
+        setServerError(result.error);
+        return;
+      }
+      onClose();
+      router.refresh();
+    } catch {
+      setServerError("No se pudo guardar. Intentá de nuevo");
+    } finally {
+      setIsSaving(false);
     }
   }
 
@@ -109,9 +147,10 @@ export function AddKidModal({
             <div className="flex flex-none items-center gap-3">
               <button
                 type="submit"
-                className="text-accent-deep cursor-pointer text-[15px] font-extrabold"
+                disabled={isSaving}
+                className="text-accent-deep cursor-pointer text-[15px] font-extrabold disabled:cursor-wait disabled:opacity-60"
               >
-                Guardar
+                {isSaving ? "Guardando…" : "Guardar"}
               </button>
               <button
                 type="button"
@@ -197,29 +236,32 @@ export function AddKidModal({
                 <div className="relative">
                   <select
                     id="add-kid-classroom"
-                    value={classroom}
-                    onChange={(event) =>
-                      setClassroom(event.target.value as Classroom | "")
-                    }
+                    value={roomId}
+                    onChange={(event) => setRoomId(event.target.value)}
                     aria-label="Sala"
+                    disabled={isLoadingRooms || roomsError !== null || roomsUnavailable}
                     className={`${inputBase} cursor-pointer appearance-none pr-10 font-bold`}
                     style={{
                       borderColor: errors.classroom
                         ? "var(--auth-error)"
                         : "var(--auth-input-border)",
                       color:
-                        classroom === ""
+                        roomId === ""
                           ? "var(--auth-placeholder)"
                           : "var(--foreground)",
                     }}
                   >
-                    <option value="">Elegir sala</option>
-                    {(Object.keys(CLASSROOM_LABELS) as Classroom[]).map(
-                      (option) => (
-                        <option key={option} value={option}>
-                          {CLASSROOM_LABELS[option]}
-                        </option>
-                      ),
+                    {isLoadingRooms ? (
+                      <option value="">Cargando salas…</option>
+                    ) : (
+                      <>
+                        <option value="">Elegir sala</option>
+                        {rooms.map((room) => (
+                          <option key={room.id} value={room.id}>
+                            {room.name}
+                          </option>
+                        ))}
+                      </>
                     )}
                   </select>
                   <svg
@@ -240,6 +282,16 @@ export function AddKidModal({
                 {errors.classroom ? (
                   <p role="alert" className={errorBase}>
                     {errors.classroom}
+                  </p>
+                ) : null}
+                {roomsError ? (
+                  <p role="alert" className={errorBase}>
+                    {roomsError}
+                  </p>
+                ) : null}
+                {!roomsError && roomsUnavailable ? (
+                  <p role="alert" className={errorBase}>
+                    No hay salas disponibles. Pedí ayuda a la guardería
                   </p>
                 ) : null}
               </div>
@@ -279,6 +331,11 @@ export function AddKidModal({
                 color: "var(--foreground)",
               }}
             />
+            {serverError ? (
+              <p role="alert" className={`${errorBase} mt-[14px]`}>
+                {serverError}
+              </p>
+            ) : null}
           </div>
         </form>
       </div>
